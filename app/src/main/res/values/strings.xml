@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TopQuiz</string>
+    <string name="bienvenue_page_1">Bienvenue dans TopQuiz. Quel est votre prénom ?</string>
+    <string name="EditText_page_1">Ecris ton nom</string>
+    <string name="button_page_1">suivant</string>
+    <string name="Question_page_2">What is the name of the current french president ?</string>
+    <string name="reponse_1_page_2">François Hollande</string>
+    <string name="reponse_2_page_2">Emmanuel Macron</string>
+    <string name="reponse_3_page_2">Jacques Chirac</string>
+    <string name="reponse_4_page_2">François Mitterand</string>
+</resources>
