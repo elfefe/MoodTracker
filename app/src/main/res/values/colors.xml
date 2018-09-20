@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="good">#B8E986</color>
+    <color name="happy">#F9EC4F</color>
+    <color name="angry">#DE3C50</color>
+    <color name="average">#458AD9</color>
+    <color name="sad">#9B9B9B</color>
 </resources>
