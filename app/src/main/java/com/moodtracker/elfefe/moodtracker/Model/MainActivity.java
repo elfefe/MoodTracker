@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,7 +20,8 @@ import com.moodtracker.elfefe.moodtracker.R;
 
 import static java.lang.System.out;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnGestureListener{
+
 
     private SharedPreferences preferences;
 
@@ -31,7 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int HISTORY_ACTIVITY_REQUEST_CODE = 42;
     public static final String STATE_KEY  = "STATE_KEY";
     private static final String PREF_KEY  = "PREF_KEY";
-    private GestureDetectorCompat mDetector;
+    private GestureDetector gestureDetector;
+    private GestureListener gestureListener;
+    private String flingYDetector;
+    private int[] color,feeling;
+    private int x = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +47,22 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        mDetector = new GestureDetectorCompat(this, new GestureListener());
+        color = new int[]{
+                R.color.happy,
+                R.color.good,
+                R.color.average,
+                R.color.sad,
+                R.color.angry
+        };
+        feeling = new int[]{
+                R.drawable.happy,
+                R.drawable.good,
+                R.drawable.average,
+                R.drawable.sad,
+                R.drawable.angry
+        };
+
+        gestureDetector = new GestureDetector(this);
 
         preferences = getPreferences(MODE_PRIVATE);
 
@@ -50,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         mImageHistory = findViewById(R.id.imageHistory);
         mImageComment = findViewById(R.id.imageComment);
 
-        setFeeling(R.color.happy,R.drawable.happy);
+        setFeeling(color[x],feeling[x]);
 
 
         mImageComment.setOnClickListener(v -> {
@@ -119,9 +140,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
-        this.mDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
+    public boolean onDown(MotionEvent e) {
+        return false;
     }
 
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent event1, MotionEvent event2,
+                           float velocityX, float velocityY) {
+
+            if (velocityY < 0 && x<4){
+                x++;
+                Log.d("GESTURE:", String.valueOf(x));
+                setFeeling(color[x],feeling[x]);
+            }
+            if (velocityY > 0 && x>0){
+                x--;
+                Log.d("GESTURE:", String.valueOf(x));
+                setFeeling(color[x],feeling[x]);
+            }
+        return true;
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event) ;
+    }
 }
