@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
 
+import java.util.Objects;
+
 import static com.moodtracker.elfefe.moodtracker.Model.MainActivity.STATE_KEY;
 import static java.lang.System.out;
 
@@ -14,6 +16,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     Button mback;
     TextView mTextView1;
+    String comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,8 @@ public class HistoryActivity extends AppCompatActivity {
         mTextView1 = findViewById(R.id.comment1);
 
 
-        String comment = getIntent().getStringExtra(STATE_KEY);
+        comment = getIntent().getStringExtra(STATE_KEY);
+
 
         mTextView1.setText(comment);
 

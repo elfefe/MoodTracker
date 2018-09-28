@@ -16,11 +16,9 @@
         android:text="@string/history_text1"
         app:layout_constraintBottom_toTopOf="@+id/comment2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="1"
-        tools:ignore="NotSibling" />
+        app:layout_constraintWidth_percent="1" />
 
     <TextView
         android:id="@+id/comment2"

@@ -8,7 +8,7 @@
     tools:context=".Model.HistoryActivity">
 
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/comment1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -17,11 +17,11 @@
         android:text="@string/history_text1"
         app:layout_constraintBottom_toTopOf="@+id/comment2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1"
-        tools:ignore="NotSibling" />
+        app:layout_constraintHeight_percent="0.4" />
+
 
     <TextView
         android:id="@+id/comment2"

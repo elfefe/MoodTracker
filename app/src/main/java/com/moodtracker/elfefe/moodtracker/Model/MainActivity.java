@@ -89,7 +89,16 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
                     .show();
 
         });
-        
+
+        mImageHistory.setOnClickListener(v ->{
+
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+
+            intent.putExtra(STATE_KEY, state);
+
+            startActivity(intent);
+
+        });
     }
 
     private void setFeeling(int color, int feeling){
@@ -113,9 +122,6 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
 
         out.println("MainActivity::onResume()");
 
-        mImageHistory.setOnClickListener(v ->
-                startActivity(new Intent(this, HistoryActivity.class)
-                        .putExtra(state, STATE_KEY)));
     }
 
     @Override
