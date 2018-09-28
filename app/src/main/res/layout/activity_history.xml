@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CACACA"
-    tools:context=".HistoryActivity">
+    tools:context=".Model.HistoryActivity">
 
     <TextView
         android:id="@+id/comment1"
@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="1"
         tools:ignore="NotSibling" />
@@ -33,7 +32,6 @@
         app:layout_constraintBottom_toTopOf="@+id/comment3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment1"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.8" />
 
@@ -60,6 +58,7 @@
         app:layout_constraintBottom_toTopOf="@+id/comment5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment3"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.6" />
 
@@ -96,11 +95,20 @@
         android:background="@color/average"
         android:padding="5dp"
         android:text="@string/history_text7"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/back_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment6"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.6" />
+
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/back_btn"
+        app:layout_constraintTop_toBottomOf="@+id/comment7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"/>
 
 </android.support.constraint.ConstraintLayout>
