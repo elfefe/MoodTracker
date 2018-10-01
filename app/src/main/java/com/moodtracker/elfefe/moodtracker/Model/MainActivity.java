@@ -3,7 +3,6 @@ package com.moodtracker.elfefe.moodtracker.Model;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,28 +15,36 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.moodtracker.elfefe.moodtracker.Controller.GestureListener;
+import com.moodtracker.elfefe.moodtracker.Controller.LoaderMainView;
 import com.moodtracker.elfefe.moodtracker.R;
 
 import static java.lang.System.out;
 
-public class MainActivity extends AppCompatActivity implements OnGestureListener{
+public class MainActivity extends AppCompatActivity {
 
 
-    private SharedPreferences preferences;
 
     private ConstraintLayout main;
     private ImageView mImage;
     private ImageButton mImageComment,mImageHistory;
-    private int happy,good,average,sad,angry;
     private String state;
-    private static final int HISTORY_ACTIVITY_REQUEST_CODE = 42;
     public static final String STATE_KEY  = "STATE_KEY";
-    private static final String PREF_KEY  = "PREF_KEY";
-    private GestureDetector gestureDetector;
-    private GestureListener gestureListener;
-    private String flingYDetector;
-    private int[] color,feeling;
-    private int x = 1;
+
+    private int[] color = new int[]{
+                        R.color.happy,
+                        R.color.good,
+                        R.color.average,
+                        R.color.sad,
+                        R.color.angry
+                },feeling = new int[]{
+                        R.drawable.happy,
+                        R.drawable.good,
+                        R.drawable.average,
+                        R.drawable.sad,
+                        R.drawable.angry
+                };
+
+    private GestureDetector mGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,31 +54,20 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
 
         setContentView(R.layout.activity_main);
 
-        color = new int[]{
-                R.color.happy,
-                R.color.good,
-                R.color.average,
-                R.color.sad,
-                R.color.angry
-        };
-        feeling = new int[]{
-                R.drawable.happy,
-                R.drawable.good,
-                R.drawable.average,
-                R.drawable.sad,
-                R.drawable.angry
-        };
-
-        gestureDetector = new GestureDetector(this);
-
-        preferences = getPreferences(MODE_PRIVATE);
-
         main = findViewById(R.id.mainView);
         mImage = findViewById(R.id.imageView);
         mImageHistory = findViewById(R.id.imageHistory);
         mImageComment = findViewById(R.id.imageComment);
 
-        setFeeling(color[x],feeling[x]);
+        LoaderMainView mainView = new LoaderMainView(this,main,mImage,mImageHistory,mImageComment);
+
+        GestureListener gestureListener = new GestureListener(mainView,color,feeling);
+
+        mainView.setFeeling(color[gestureListener.getValueX()],feeling[gestureListener.getValueX()]);
+
+        mGestureDetector = new GestureDetector(this,gestureListener);
+
+
 
 
         mImageComment.setOnClickListener(v -> {
@@ -101,11 +97,10 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         });
     }
 
-    private void setFeeling(int color, int feeling){
-        mImage.setImageResource(feeling);
-        main.setBackgroundColor(getResources().getColor(color));
-        mImageHistory.setBackgroundColor(getResources().getColor(color));
-        mImageComment.setBackgroundColor(getResources().getColor(color));
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        mGestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event) ;
     }
 
 
@@ -143,52 +138,5 @@ public class MainActivity extends AppCompatActivity implements OnGestureListener
         super.onDestroy();
 
         out.println("MainActivity::onDestroy()");
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent event1, MotionEvent event2,
-                           float velocityX, float velocityY) {
-
-            if (velocityY < 0 && x<4){
-                x++;
-                Log.d("GESTURE:", String.valueOf(x));
-                setFeeling(color[x],feeling[x]);
-            }
-            if (velocityY > 0 && x>0){
-                x--;
-                Log.d("GESTURE:", String.valueOf(x));
-                setFeeling(color[x],feeling[x]);
-            }
-        return true;
-    }
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event) ;
     }
 }

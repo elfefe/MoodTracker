@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Model.HistoryActivity" />
+        <activity android:name=".Controller.LoaderMainView" />
     </application>
 
 </manifest>

@@ -2,32 +2,60 @@ package com.moodtracker.elfefe.moodtracker.Controller;
 
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
-import android.view.VelocityTracker;
 
-public class GestureListener  extends SimpleOnGestureListener {
-    private static final String DEBUG_TAG = "Gestures";
-    private String flingYDetector;
+public class GestureListener implements GestureDetector.OnGestureListener {
+    private int valueX = 1;
+    private int[] color,feeling;
+    private LoaderMainView loaderMainView;
 
-
-    @Override
-    public boolean onDown(MotionEvent event) {
-        Log.d(DEBUG_TAG,"onDown: " + event.toString());
-        return true;
+    public GestureListener(LoaderMainView loaderMainView, int[] color,int[] feeling){
+        this.loaderMainView = loaderMainView;
+        this.color = color;
+        this.feeling = feeling;
     }
 
     @Override
-    public boolean onFling(MotionEvent event1, MotionEvent event2,
-                           float velocityX, float velocityY) {
-        if (velocityY < 0)
-            flingYDetector = "UP";
-        if (velocityY > 0)
-            flingYDetector = "DOWN";
-        return true;
+    public boolean onDown(MotionEvent e) {
+        return false;
     }
 
-    public String getFlingYDetector() {
-        return flingYDetector;
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (velocityY < 0 && valueX <4){
+                valueX++;
+                Log.d("GESTURE:", String.valueOf(valueX));
+                loaderMainView.setFeeling(color[valueX],feeling[valueX]);
+            }
+            if (velocityY > 0 && valueX >0){
+                valueX--;
+                Log.d("GESTURE:", String.valueOf(valueX));
+                loaderMainView.setFeeling(color[valueX],feeling[valueX]);
+            }
+        return false;
+    }
+
+    public int getValueX() {
+        return valueX;
     }
 }

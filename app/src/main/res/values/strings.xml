@@ -3,7 +3,7 @@
     <string name="good">Pas de problèmes !</string>
     <string name="title_activity_history">historyActivity</string>
     <string name="good_history">Historique d\'humeur</string>
-    <string name="history_text1">TEXTE</string>
+    <string name="history_text1" />
     <string name="history_text2" />
     <string name="history_text3" />
     <string name="history_text4" />
