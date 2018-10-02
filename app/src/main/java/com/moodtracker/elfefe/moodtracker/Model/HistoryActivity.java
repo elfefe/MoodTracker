@@ -2,20 +2,22 @@ package com.moodtracker.elfefe.moodtracker.Model;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
-import android.widget.TextView;
 
+import com.moodtracker.elfefe.moodtracker.Controller.CommentAdapter;
 import com.moodtracker.elfefe.moodtracker.R;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.moodtracker.elfefe.moodtracker.Model.MainActivity.STATE_KEY;
 import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    Button mback;
-    TextView mTextView1;
+    RecyclerView currentLayout;
     String comment;
 
     @Override
@@ -26,19 +28,19 @@ public class HistoryActivity extends AppCompatActivity {
 
         out.println("HistoryActivity::onCreate()");
 
-        mback = findViewById(R.id.back_btn);
-        mTextView1 = findViewById(R.id.comment1);
+        currentLayout = findViewById(R.id.comment);
 
 
         comment = getIntent().getStringExtra(STATE_KEY);
 
+        ArrayList<String> listComment = new ArrayList<>();
+        listComment.add(comment);
 
-        mTextView1.setText(comment);
+        currentLayout.setLayoutManager(new LinearLayoutManager(this));
+        currentLayout.setAdapter(new CommentAdapter(listComment));
+
 
 
         out.println(comment);
-
-
-        mback.setOnClickListener(v -> finish());
     }
 }

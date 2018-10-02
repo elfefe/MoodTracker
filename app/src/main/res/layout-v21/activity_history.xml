@@ -16,17 +16,9 @@
         android:padding="5dp"
         android:text="@string/history_text1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/back_btn"
-        app:layout_constraintWidth_default="percent" />
-
-    <Button
-        android:id="@+id/back_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/back_btn"
-        app:layout_constraintTop_toBottomOf="@+id/comment"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_default="percent"/>
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintHeight_default="percent"/>
 
 </android.support.constraint.ConstraintLayout>
