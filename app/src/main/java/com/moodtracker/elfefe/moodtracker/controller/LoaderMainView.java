@@ -1,4 +1,4 @@
-package com.moodtracker.elfefe.moodtracker.Controller;
+package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.annotation.TargetApi;
 import android.content.Context;

@@ -1,22 +1,19 @@
-package com.moodtracker.elfefe.moodtracker.Model;
+package com.moodtracker.elfefe.moodtracker.model;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.moodtracker.elfefe.moodtracker.Controller.GestureListener;
-import com.moodtracker.elfefe.moodtracker.Controller.LoaderMainView;
 import com.moodtracker.elfefe.moodtracker.R;
+import com.moodtracker.elfefe.moodtracker.controller.GestureListener;
+import com.moodtracker.elfefe.moodtracker.controller.LoaderMainView;
 
 import static java.lang.System.out;
 
