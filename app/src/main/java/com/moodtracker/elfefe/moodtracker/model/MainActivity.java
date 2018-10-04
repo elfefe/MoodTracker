@@ -2,7 +2,6 @@ package com.moodtracker.elfefe.moodtracker.model;
 
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,13 +20,11 @@ import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-    private ConstraintLayout main;
-    private ImageView mImage;
-    private ImageButton mImageComment,mImageHistory;
     private String state;
+    private int feel;
+
     public static final String STATE_KEY  = "STATE_KEY";
+    public static final String FEEL_KEY = "FEEL_KEY";
 
     private int[] color = new int[]{
                         R.color.happy,
@@ -54,13 +51,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        ConstraintLayout main = findViewById(R.id.mainView);
+        ImageView mImage = findViewById(R.id.imageView);
+        ImageButton mImageHistory = findViewById(R.id.imageHistory);
+        ImageButton mImageComment = findViewById(R.id.imageComment);
 
-        main = findViewById(R.id.mainView);
-        mImage = findViewById(R.id.imageView);
-        mImageHistory = findViewById(R.id.imageHistory);
-        mImageComment = findViewById(R.id.imageComment);
-
-        LoaderMainView mainView = new LoaderMainView(this,main,mImage,mImageHistory,mImageComment);
+        LoaderMainView mainView = new LoaderMainView(this, main, mImage, mImageHistory, mImageComment);
 
         GestureListener gestureListener = new GestureListener(mainView,color,feeling);
 
@@ -68,8 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         mGestureDetector = new GestureDetector(this,gestureListener);
 
-
-
+        feel = color[gestureListener.getValueX()];
 
         mImageComment.setOnClickListener(v -> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -92,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
 
             intent.putExtra(STATE_KEY, state);
+            intent.putExtra(FEEL_KEY,feel);
 
             startActivity(intent);
 

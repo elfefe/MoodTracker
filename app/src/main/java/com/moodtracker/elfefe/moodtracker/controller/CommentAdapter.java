@@ -31,14 +31,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     }
 
     @Override
-    public int getItemCount() {
-        return 7;
-    }
+    public int getItemCount() { return 7; }
 
     @Override
-    public int getItemViewType(int position){
-        return R.layout.list_cell;
-    }
+    public int getItemViewType(int position){ return R.layout.list_cell; }
 
     @NonNull
     @Override
@@ -73,14 +69,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             textView = itemView.findViewById(R.id.comment_txt);
         }
 
-        @SuppressLint({"ResourceAsColor", "SetTextI18n"})
         void display(ArrayList<HistoryValues> list, int position){
             this.list = list;
 
-
             ConstraintLayout.LayoutParams parameter =(ConstraintLayout.LayoutParams) constraintView.getLayoutParams();
-
-            Log.d("TEXTE", String.valueOf(list.get(position)));
 
             constraintView.setOnClickListener(v -> Toast.makeText(context,String.valueOf(list.get(position).getQuote()),Toast.LENGTH_LONG).show());
 
@@ -103,28 +95,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                 constraintView.setBackgroundResource(R.color.good);
             }
 
-
             constraintView.setBackgroundResource(list.get(position).getQuoteColor());
 
-            switch (position){
-
-                case 0: textView.setText("Il y a une semaine");
-                    break;
-                case 1: textView.setText("Il y a six jours");
-                    break;
-                case 2: textView.setText("Il y a cinq jours");
-                    break;
-                case 3: textView.setText("Il y a quatre jours");
-                    break;
-                case 4: textView.setText("Il y a trois jours");
-                    break;
-                case 5: textView.setText("Avant-hier");
-                    break;
-                case 6: textView.setText("Hier");
-                    break;
-            }
+            setDating(position,textView);
         }
     }
-
-
+    @SuppressLint("SetTextI18n")
+    private void setDating(int position, TextView textView){
+        switch (position){
+            case 0: textView.setText("Il y a une semaine");
+                break;
+            case 1: textView.setText("Il y a six jours");
+                break;
+            case 2: textView.setText("Il y a cinq jours");
+                break;
+            case 3: textView.setText("Il y a quatre jours");
+                break;
+            case 4: textView.setText("Il y a trois jours");
+                break;
+            case 5: textView.setText("Avant-hier");
+                break;
+            case 6: textView.setText("Hier");
+                break;
+        }
+    }
 }
