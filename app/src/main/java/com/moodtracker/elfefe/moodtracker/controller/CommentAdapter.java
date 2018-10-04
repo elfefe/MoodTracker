@@ -1,6 +1,7 @@
 package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Space;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
 
@@ -20,8 +22,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
     private ArrayList<HistoryValues> mlist;
     private int screenHeight;
+    private Context context;
 
-    public CommentAdapter(ArrayList<HistoryValues> list, int screenHeight){
+    public CommentAdapter(Context context, ArrayList<HistoryValues> list, int screenHeight){
+        this.context = context;
         mlist = list;
         this.screenHeight = screenHeight;
     }
@@ -69,18 +73,20 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             textView = itemView.findViewById(R.id.comment_txt);
         }
 
-        @SuppressLint("ResourceAsColor")
+        @SuppressLint({"ResourceAsColor", "SetTextI18n"})
         void display(ArrayList<HistoryValues> list, int position){
             this.list = list;
 
 
             ConstraintLayout.LayoutParams parameter =(ConstraintLayout.LayoutParams) constraintView.getLayoutParams();
 
+            Log.d("TEXTE", String.valueOf(list.get(position)));
 
-            itemView.getLayoutParams().height = screenHeight/8;
+            constraintView.setOnClickListener(v -> Toast.makeText(context,String.valueOf(list.get(position).getQuote()),Toast.LENGTH_LONG).show());
 
-            Log.d("HEIGHT SCREEN", String.valueOf(screenHeight));
-            Log.d("HEIGHT",String.valueOf(itemView.getHeight()));
+            itemView.getLayoutParams().height = screenHeight/7;
+
+            Log.d("Height", String.valueOf(itemView.getLayoutParams().height));
 
             if(list.get(position).getQuoteColor() == R.color.angry)
                 parameter.matchConstraintPercentWidth = 0.2f;
@@ -92,10 +98,31 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                 parameter.matchConstraintPercentWidth = 0.8f;
             else if(list.get(position).getQuoteColor() == R.color.happy)
                 parameter.matchConstraintPercentWidth = 1f;
+            else{
+                parameter.matchConstraintPercentWidth = 0.8f;
+                constraintView.setBackgroundResource(R.color.good);
+            }
+
 
             constraintView.setBackgroundResource(list.get(position).getQuoteColor());
 
-            textView.setText(list.get(position).getQuote());
+            switch (position){
+
+                case 0: textView.setText("Il y a une semaine");
+                    break;
+                case 1: textView.setText("Il y a six jours");
+                    break;
+                case 2: textView.setText("Il y a cinq jours");
+                    break;
+                case 3: textView.setText("Il y a quatre jours");
+                    break;
+                case 4: textView.setText("Il y a trois jours");
+                    break;
+                case 5: textView.setText("Avant-hier");
+                    break;
+                case 6: textView.setText("Hier");
+                    break;
+            }
         }
     }
 
