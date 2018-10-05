@@ -6,11 +6,11 @@ import android.support.annotation.DrawableRes;
 import com.moodtracker.elfefe.moodtracker.R;
 
 public enum Mood {
-    ANGRY(R.color.angry,R.drawable.angry),
-    SAD(R.color.sad,R.drawable.sad),
-    AVERAGE(R.color.average,R.drawable.average),
+    HAPPY(R.color.happy,R.drawable.happy),
     GOOD(R.color.good,R.drawable.good),
-    HAPPY(R.color.happy,R.drawable.happy);
+    AVERAGE(R.color.average,R.drawable.average),
+    SAD(R.color.sad,R.drawable.sad),
+    ANGRY(R.color.angry,R.drawable.angry);
 
     public int getColor() {
         return color;
