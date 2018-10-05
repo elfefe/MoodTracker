@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">MoodTracker</string>
-    <string name="good">Pas de problèmes !</string>
     <string name="title_activity_history">historyActivity</string>
     <string name="good_history">Historique d\'humeur</string>
-    <string name="history_text1" />
-    <string name="history_text2" />
-    <string name="history_text3" />
-    <string name="history_text4" />
-    <string name="history_text5" />
-    <string name="history_text6"/>
-    <string name="history_text7" />
-    <string name="back_btn">BACK</string>
+    <string name="history_text1" >Il y a une semaine</string>
+    <string name="history_text2" >Il y a six jours</string>
+    <string name="history_text3" >Il y a cinq jours</string>
+    <string name="history_text4" >Il y a quatre jours</string>
+    <string name="history_text5" >Il y a trois jours</string>
+    <string name="history_text6" >Avant-hier</string>
+    <string name="history_text7" >Hier</string>
+    <string name="description_btn">The message you\'ve registered this day.</string>
+    <string name="good">to do bem</string>
 </resources>

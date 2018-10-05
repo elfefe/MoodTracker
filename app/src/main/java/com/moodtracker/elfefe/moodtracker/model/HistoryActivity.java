@@ -1,22 +1,17 @@
 package com.moodtracker.elfefe.moodtracker.model;
 
 import android.arch.persistence.room.Room;
-import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.Display;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.controller.CommentAdapter;
-import com.moodtracker.elfefe.moodtracker.controller.HistoryValues;
 import com.moodtracker.elfefe.moodtracker.local.AppDatabase;
 import com.moodtracker.elfefe.moodtracker.local.Quote;
 
-import java.util.ArrayList;
+import java.time.ZonedDateTime;
 
 import static com.moodtracker.elfefe.moodtracker.model.MainActivity.FEEL_KEY;
 import static com.moodtracker.elfefe.moodtracker.model.MainActivity.STATE_KEY;
@@ -26,12 +21,12 @@ public class HistoryActivity extends AppCompatActivity {
 
     AppDatabase db;
 
-    RecyclerView currentLayout;
+
     String comment;
     int feeling;
 
-
-
+    TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5,mTextView6,mTextView7;
+    ImageButton mImageButton1,mImageButton2,mImageButton3,mImageButton4,mImageButton5,mImageButton6,mImageButton7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,54 +36,58 @@ public class HistoryActivity extends AppCompatActivity {
 
         out.println("HistoryActivity::onCreate()");
 
-        currentLayout = findViewById(R.id.comment);
-
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "state_db").allowMainThreadQueries().build();
+
+
 
         comment = getIntent().getStringExtra(STATE_KEY);
         feeling = getIntent().getIntExtra(FEEL_KEY,0);
 
-        Quote state = new Quote(db.quoteDao().getAll().size(),comment,feeling);
-
-        db.quoteDao().insertAll(state);
-
-        out.println(db.quoteDao().getAll().get(2).getQuote());
-        out.println(db.quoteDao().getAll().size());
-
-        ArrayList<HistoryValues> listComment = new ArrayList<>();
-
-        listComment.add(new HistoryValues("", R.color.good));
-        listComment.add(new HistoryValues("", R.color.good));
-        listComment.add(new HistoryValues("", R.color.good));
-        listComment.add(new HistoryValues("", R.color.good));
-        listComment.add(new HistoryValues("", R.color.good));
-        listComment.add(new HistoryValues("", R.color.good));
-        listComment.add(new HistoryValues("", R.color.good));
-
-        currentLayout.setLayoutManager(new LinearLayoutManager(this));
-
-        int actionBarHeight = 0;
-        TypedValue actionBarDimension = new TypedValue();
-        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, actionBarDimension, true))
-        {
-            actionBarHeight = TypedValue.complexToDimensionPixelSize(actionBarDimension.data, getResources().getDisplayMetrics());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            ZonedDateTime date = ZonedDateTime.now();
+            Quote state;
+            if (db.quoteDao().getAll().size() != 0){
+                if (db.quoteDao().getAll().get(db.quoteDao().getAll().size() - 1).getUid() != date.getDayOfMonth()) {
+                    state = new Quote(date.getDayOfMonth(), comment, feeling);
+                    db.quoteDao().insertAll(state);
+                }
+            }else{
+                state = new Quote(date.getDayOfMonth(), comment, feeling);
+                db.quoteDao().insertAll(state);
+            }
         }
-        int viewHeight = screenHeight() - actionBarHeight - 24;
-
-        Log.d("SCREEN HEIGHT: ",String.valueOf(screenHeight()));
-        Log.d("VIEW HEIGHT: ",String.valueOf(viewHeight));
-        Log.d("BAR HEIGHT: ",String.valueOf(actionBarHeight));
 
 
 
-        currentLayout.setAdapter(new CommentAdapter(this,listComment, viewHeight));
+        mTextView1 = findViewById(R.id.comment1);
+        mTextView2 = findViewById(R.id.comment2);
+        mTextView3 = findViewById(R.id.comment3);
+        mTextView4 = findViewById(R.id.comment4);
+        mTextView5 = findViewById(R.id.comment5);
+        mTextView6 = findViewById(R.id.comment6);
+        mTextView7 = findViewById(R.id.comment7);
+
+        mImageButton1 = findViewById(R.id.btn1);
+        mImageButton2 = findViewById(R.id.btn2);
+        mImageButton3 = findViewById(R.id.btn3);
+        mImageButton4 = findViewById(R.id.btn4);
+        mImageButton5 = findViewById(R.id.btn5);
+        mImageButton6 = findViewById(R.id.btn6);
+        mImageButton7 = findViewById(R.id.btn7);
+
+        onClick(mTextView1);
+        onClick(mTextView2);
+        onClick(mTextView3);
+        onClick(mTextView4);
+        onClick(mTextView5);
+        onClick(mTextView6);
+        onClick(mTextView7);
+
     }
-
-    public int screenHeight(){
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.y;
+    private void onClick(TextView textView){
+        textView.setOnClickListener(v -> {
+            Toast.makeText(this,"oui",Toast.LENGTH_LONG).show();
+        });
     }
 }

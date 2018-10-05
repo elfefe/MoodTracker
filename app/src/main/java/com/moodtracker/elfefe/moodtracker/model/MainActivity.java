@@ -1,11 +1,10 @@
 package com.moodtracker.elfefe.moodtracker.model;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.EditText;
@@ -26,20 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String STATE_KEY  = "STATE_KEY";
     public static final String FEEL_KEY = "FEEL_KEY";
 
-    private int[] color = new int[]{
-                        R.color.happy,
-                        R.color.good,
-                        R.color.average,
-                        R.color.sad,
-                        R.color.angry
-                },feeling = new int[]{
-                        R.drawable.happy,
-                        R.drawable.good,
-                        R.drawable.average,
-                        R.drawable.sad,
-                        R.drawable.angry
-                };
-
     private GestureDetector mGestureDetector;
 
     @Override
@@ -58,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
 
         LoaderMainView mainView = new LoaderMainView(this, main, mImage, mImageHistory, mImageComment);
 
-        GestureListener gestureListener = new GestureListener(mainView,color,feeling);
+        GestureListener gestureListener = new GestureListener(mainView);
 
-        mainView.setFeeling(color[gestureListener.getValueX()],feeling[gestureListener.getValueX()]);
+        mainView.setFeeling(Mood.GOOD.getColor(),Mood.GOOD.getFeeling());
 
         mGestureDetector = new GestureDetector(this,gestureListener);
 
-        feel = color[gestureListener.getValueX()];
+        feel = Mood.values()[gestureListener.getValueX()].getColor();
 
         mImageComment.setOnClickListener(v -> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
