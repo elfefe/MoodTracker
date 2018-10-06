@@ -47,7 +47,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         comment = getIntent().getStringExtra(STATE_KEY);
         feeling = getIntent().getIntExtra(FEEL_KEY,0);
-        int i = dbData.size() - 1;
+        
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && comment != null) {
             ZonedDateTime date = ZonedDateTime.now();
 
@@ -62,7 +62,6 @@ public class HistoryActivity extends AppCompatActivity {
         Log.d("DB DAY: ", String.valueOf(dbData.get(dbData.size() - 1).getUid()));
         Log.d("DB SIZE: ", String.valueOf(dbData.size()));
         Log.d("COMMENT: ", String.valueOf(comment) );
-
 
         mTextView1 = findViewById(R.id.comment1);
         mTextView2 = findViewById(R.id.comment2);
@@ -102,6 +101,11 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
     private void onClick(TextView textView,int position){
-        textView.setOnClickListener(v -> Toast.makeText(this,db.quoteDao().getAll().get(position).getQuote(),Toast.LENGTH_LONG).show());
+        textView.setOnClickListener(v -> Toast.makeText(this,db.quoteDao()
+                                                                        .getAll()
+                                                                        .get(position)
+                                                                        .getQuote(),Toast.LENGTH_LONG)
+                                                                        .show()
+                                    );
     }
 }

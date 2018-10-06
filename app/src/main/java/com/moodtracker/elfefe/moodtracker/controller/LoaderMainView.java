@@ -3,8 +3,9 @@ package com.moodtracker.elfefe.moodtracker.controller;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -23,7 +24,7 @@ public class LoaderMainView {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public void setFeeling(int color, int feeling){
+    public void setFeeling(@ColorRes int color,@DrawableRes int feeling){
         smiley.setImageResource(feeling);
         mainLayout.setBackgroundColor(context.getResources().getColor(color));
         iconeHistory.setBackgroundColor(context.getResources().getColor(color));
