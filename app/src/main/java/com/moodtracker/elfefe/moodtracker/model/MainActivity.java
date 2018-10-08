@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         mGestureDetector = new GestureDetector(this,gestureListener);
 
-        feel = Mood.values()[gestureListener.getValueX()].getColor();
-
         mImageComment.setOnClickListener(v -> {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -68,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mImageHistory.setOnClickListener(v ->{
+
+            feel = Mood.values()[gestureListener.getValueX()].getColor();
 
             Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
 

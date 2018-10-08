@@ -2,8 +2,8 @@ package com.moodtracker.elfefe.moodtracker.model;
 
 import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,17 +51,19 @@ public class HistoryActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && comment != null) {
             ZonedDateTime date = ZonedDateTime.now();
 
-            if (dbData.get(dbData.size() - 1).getUid() != date.getDayOfMonth() || dbData.size() == 0) {
+            if (dbData.size() == 0) {
                 state = new Quote(date.getDayOfMonth(), comment, feeling);
                 db.quoteDao().insertAll(state);
-            }else{
+            }else if(dbData.get(dbData.size() -1).getUid() != date.getDayOfMonth()){
+                state = new Quote(date.getDayOfMonth(), comment, feeling);
+                db.quoteDao().insertAll(state);
+            }else
                 db.quoteDao().replaceField(date.getDayOfMonth(), comment, feeling);
-            }
-        }
-
-        Log.d("DB DAY: ", String.valueOf(dbData.get(dbData.size() - 1).getUid()));
-        Log.d("DB SIZE: ", String.valueOf(dbData.size()));
-        Log.d("COMMENT: ", String.valueOf(comment) );
+        }else if(android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.O)
+            Toast.makeText(this,
+                            "This application don't take in charge your SDK version.",
+                                Toast.LENGTH_LONG)
+                    .show();
 
         mTextView1 = findViewById(R.id.comment1);
         mTextView2 = findViewById(R.id.comment2);
@@ -89,6 +91,7 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(mTextView6);
         allTextView.add(mTextView7);
 
+
         if (dbData.size() != 0) {
             int x = 0;
             if (dbData.size() > 7)
@@ -101,11 +104,30 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
     private void onClick(TextView textView,int position){
-        textView.setOnClickListener(v -> Toast.makeText(this,db.quoteDao()
-                                                                        .getAll()
-                                                                        .get(position)
-                                                                        .getQuote(),Toast.LENGTH_LONG)
-                                                                        .show()
+
+        Quote dbGet = db.quoteDao().getAll().get(position);
+
+        textView.setBackgroundColor(getResources().getColor(dbGet.getFeeling()));
+
+        textView.setOnClickListener(v -> Toast.makeText(
+                                            this,
+                                                    dbGet.getQuote(),
+                                                    Toast.LENGTH_LONG)
+                                                .show()
                                     );
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
+        textView.setLayoutParams(layoutParams);
+
+        if (dbGet.getFeeling() ==  Mood.HAPPY.getColor())
+            layoutParams.matchConstraintPercentWidth =  1;
+        else if (dbGet.getFeeling() ==  Mood.GOOD.getColor())
+            layoutParams.matchConstraintPercentWidth =  0.8f;
+        else if (dbGet.getFeeling() ==  Mood.AVERAGE.getColor())
+            layoutParams.matchConstraintPercentWidth =  0.6f;
+        else if (dbGet.getFeeling() ==  Mood.SAD.getColor())
+            layoutParams.matchConstraintPercentWidth =  0.4f;
+        else if (dbGet.getFeeling() ==  Mood.ANGRY.getColor())
+            layoutParams.matchConstraintPercentWidth =  0.2f;
     }
 }
