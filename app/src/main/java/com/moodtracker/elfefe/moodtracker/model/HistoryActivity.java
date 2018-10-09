@@ -1,6 +1,5 @@
 package com.moodtracker.elfefe.moodtracker.model;
 
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +8,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.local.AppDatabase;
-import com.moodtracker.elfefe.moodtracker.local.Quote;
+import com.moodtracker.elfefe.moodtracker.local.CommentRealm;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 import static com.moodtracker.elfefe.moodtracker.model.MainActivity.FEEL_KEY;
 import static com.moodtracker.elfefe.moodtracker.model.MainActivity.STATE_KEY;
@@ -22,9 +22,7 @@ import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    AppDatabase db;
-
-    Quote state;
+    RealmQuery<CommentRealm> query;
 
     String comment;
     int feeling;
@@ -33,37 +31,31 @@ public class HistoryActivity extends AppCompatActivity {
     ImageButton mImageButton1,mImageButton2,mImageButton3,mImageButton4,mImageButton5,mImageButton6,mImageButton7;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_history);
 
         out.println("HistoryActivity::onCreate()");
 
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "state_db").allowMainThreadQueries().build();
-
-        List<Quote> dbData = db.quoteDao().getAll();
-
         comment = getIntent().getStringExtra(STATE_KEY);
         feeling = getIntent().getIntExtra(FEEL_KEY,0);
-        
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && comment != null) {
-            ZonedDateTime date = ZonedDateTime.now();
 
-            if (dbData.size() == 0) {
-                state = new Quote(date.getDayOfMonth(), comment, feeling);
-                db.quoteDao().insertAll(state);
-            }else if(dbData.get(dbData.size() -1).getUid() != date.getDayOfMonth()){
-                state = new Quote(date.getDayOfMonth(), comment, feeling);
-                db.quoteDao().insertAll(state);
-            }else
-                db.quoteDao().replaceField(date.getDayOfMonth(), comment, feeling);
-        }else if(android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.O)
-            Toast.makeText(this,
-                            "This application don't take in charge your SDK version.",
-                                Toast.LENGTH_LONG)
-                    .show();
+        Calendar cal = Calendar.getInstance();
+        Integer date = cal.get(Calendar.DAY_OF_MONTH);
+
+        Realm.init(getApplicationContext());
+        Realm realm = Realm.getDefaultInstance();
+        query = realm.where(CommentRealm.class);
+
+        CommentRealm commentRealm = new CommentRealm();
+
+        commentRealm.setDate(date);
+        commentRealm.setComment(comment);
+        commentRealm.setFeeling(feeling);
+
+        if (comment != null)
+            realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(commentRealm));
 
         mTextView1 = findViewById(R.id.comment1);
         mTextView2 = findViewById(R.id.comment2);
@@ -91,27 +83,26 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(mTextView6);
         allTextView.add(mTextView7);
 
-
-        if (dbData.size() != 0) {
+        if (query.findAll().size() != 0) {
             int x = 0;
-            if (dbData.size() > 7)
-                x = dbData.size() - 7;
-            while(x < dbData.size()) {
+            if (query.findAll().size() > 7)
+                x = query.findAll().size() - 7;
+            while(x < query.findAll().size()) {
                 onClick(allTextView.get(x), x);
                 x++;
             }
         }
-
     }
     private void onClick(TextView textView,int position){
 
-        Quote dbGet = db.quoteDao().getAll().get(position);
+        CommentRealm dbGet = query.findAll().get(position);
 
+        assert dbGet != null;
         textView.setBackgroundColor(getResources().getColor(dbGet.getFeeling()));
 
         textView.setOnClickListener(v -> Toast.makeText(
                                             this,
-                                                    dbGet.getQuote(),
+                                                    dbGet.getComment(),
                                                     Toast.LENGTH_LONG)
                                                 .show()
                                     );

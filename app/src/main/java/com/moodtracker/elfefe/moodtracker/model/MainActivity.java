@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.EditText;
@@ -35,13 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        SmsManager sms = SmsManager.getDefault();
 
         ConstraintLayout main = findViewById(R.id.mainView);
         ImageView mImage = findViewById(R.id.imageView);
         ImageButton mImageHistory = findViewById(R.id.imageHistory);
         ImageButton mImageComment = findViewById(R.id.imageComment);
 
-        LoaderMainView mainView = new LoaderMainView(this, main, mImage, mImageHistory, mImageComment);
+        LoaderMainView mainView = new LoaderMainView(this, main, mImage);
 
         GestureListener gestureListener = new GestureListener(mainView);
 
@@ -56,14 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
             builder.setTitle("Commentaire")
                     .setView(input)
-                    .setNegativeButton("Annuler", (dialog, which) -> {})
-                    .setPositiveButton("Valilder", (dialog, which) ->
+                    .setNeutralButton("Annuler", (dialog, which) -> {})
+                    .setNegativeButton("Valilder", (dialog, which) ->
                             state = input.getText().toString())
+                    .setPositiveButton("Envoyer", ((dialog, which) -> {
+                        sms.sendTextMessage(new EditText(this).getText().toString(),
+                                    null,state = input.getText().toString(),
+                                    null,
+                                 null);
+                    }))
                     .setCancelable(true)
                     .create()
                     .show();
 
         });
+
+        sms.sendTextMessage("0781611180",null,"allé",null,null);
 
         mImageHistory.setOnClickListener(v ->{
 
