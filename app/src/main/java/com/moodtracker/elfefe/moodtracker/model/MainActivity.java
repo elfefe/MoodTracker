@@ -1,6 +1,13 @@
 package com.moodtracker.elfefe.moodtracker.model;
 
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.RingtoneManager;
+import android.media.SoundPool;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +18,7 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.controller.GestureListener;
@@ -51,29 +59,61 @@ public class MainActivity extends AppCompatActivity {
 
         mGestureDetector = new GestureDetector(this,gestureListener);
 
-        mImageComment.setOnClickListener(v -> {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        SoundPool soundPool;
+        int sound;
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            soundPool = new SoundPool.Builder()
+            .setMaxStreams(1)
+            .setAudioAttributes(audioAttributes)
+            .build();
+        }else
+            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC,0);
+
+        sound = soundPool.load(this,R.raw.ring,1);
+
+
+        Uri notification = RingtoneManager.getDefaultUri(R.raw.ring);
+
+        Intent soundIntent = new Intent().setData(notification);
+        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,soundIntent, 0);
+
+        mImageComment.setOnClickListener(v -> {
+
+            final EditText comment = new EditText(this);
             final EditText input = new EditText(this);
 
-            builder.setTitle("Commentaire")
-                    .setView(input)
+
+
+            new AlertDialog.Builder(this).setTitle("Commentaire")
+                    .setView(comment)
                     .setNeutralButton("Annuler", (dialog, which) -> {})
                     .setNegativeButton("Valilder", (dialog, which) ->
-                            state = input.getText().toString())
-                    .setPositiveButton("Envoyer", ((dialog, which) -> {
-                        sms.sendTextMessage(new EditText(this).getText().toString(),
-                                    null,state = input.getText().toString(),
-                                    null,
-                                 null);
-                    }))
+                        state = comment.getText().toString())
+                    .setPositiveButton("Envoyer", (dialog, which) -> {
+                        new AlertDialog.Builder(this).setTitle("Numéro")
+                                .setView(input)
+                                .setPositiveButton("Envoyer", ((dialog1, which1) ->{
+                                        if(!input.getText().toString().equals("")){
+                                            sms.sendTextMessage(input.getText().toString(),
+                                        null,state = comment.getText().toString(),
+                                                  sentPI,
+                                        null);
+                                        }else
+                                            Toast.makeText(this,"Veuillez entrer un numéro de téléphone.",Toast.LENGTH_SHORT).show();
+                                    }))
+                                .create()
+                                .show();
+                    })
                     .setCancelable(true)
                     .create()
                     .show();
 
         });
-
-        sms.sendTextMessage("0781611180",null,"allé",null,null);
 
         mImageHistory.setOnClickListener(v ->{
 

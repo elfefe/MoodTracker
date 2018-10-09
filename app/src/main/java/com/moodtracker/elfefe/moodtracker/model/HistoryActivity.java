@@ -85,7 +85,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         if (query.findAll().size() != 0) {
             int x = 0;
-            if (query.findAll().size() > 7)
+            if (query.findAll().size() >= 7)
                 x = query.findAll().size() - 7;
             while(x < query.findAll().size()) {
                 onClick(allTextView.get(x), x);
