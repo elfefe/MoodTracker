@@ -94,21 +94,21 @@ public class MainActivity extends AppCompatActivity {
                     .setNeutralButton("Annuler", (dialog, which) -> {})
                     .setNegativeButton("Valilder", (dialog, which) ->
                         state = comment.getText().toString())
-                    .setPositiveButton("Envoyer", (dialog, which) -> {
-                        new AlertDialog.Builder(this).setTitle("Numéro")
-                                .setView(input)
-                                .setPositiveButton("Envoyer", ((dialog1, which1) ->{
-                                        if(!input.getText().toString().equals("")){
-                                            sms.sendTextMessage(input.getText().toString(),
-                                        null,state = comment.getText().toString(),
-                                                  sentPI,
-                                        null);
-                                        }else
-                                            Toast.makeText(this,"Veuillez entrer un numéro de téléphone.",Toast.LENGTH_SHORT).show();
-                                    }))
-                                .create()
-                                .show();
-                    })
+                    .setPositiveButton("Partager", (dialog, which) -> new AlertDialog.Builder(this)
+                            .setTitle("Numéro")
+                            .setView(input)
+                            .setPositiveButton("Envoyer", ((dialog1, which1) ->{
+                                    if(!input.getText().toString().equals("")){
+                                        sms.sendTextMessage(input.getText().toString(),
+                                    null,state = comment.getText().toString(),
+                                              sentPI,
+                                    null);
+                                        state = comment.getText().toString();
+                                    }else
+                                        Toast.makeText(this,"Veuillez entrer un numéro de téléphone.",Toast.LENGTH_SHORT).show();
+                                }))
+                            .create()
+                            .show())
                     .setCancelable(true)
                     .create()
                     .show();

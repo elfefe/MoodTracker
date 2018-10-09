@@ -24,7 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     RealmQuery<CommentRealm> query;
 
-    String comment;
+    String comment = null;
     int feeling;
 
     TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5,mTextView6,mTextView7;
@@ -54,6 +54,8 @@ public class HistoryActivity extends AppCompatActivity {
         commentRealm.setComment(comment);
         commentRealm.setFeeling(feeling);
 
+
+
         if (comment != null)
             realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(commentRealm));
 
@@ -75,13 +77,13 @@ public class HistoryActivity extends AppCompatActivity {
 
         ArrayList<TextView> allTextView = new ArrayList<>();
 
-        allTextView.add(mTextView1);
-        allTextView.add(mTextView2);
-        allTextView.add(mTextView3);
-        allTextView.add(mTextView4);
-        allTextView.add(mTextView5);
-        allTextView.add(mTextView6);
         allTextView.add(mTextView7);
+        allTextView.add(mTextView6);
+        allTextView.add(mTextView5);
+        allTextView.add(mTextView4);
+        allTextView.add(mTextView3);
+        allTextView.add(mTextView2);
+        allTextView.add(mTextView1);
 
         if (query.findAll().size() != 0) {
             int x = 0;
