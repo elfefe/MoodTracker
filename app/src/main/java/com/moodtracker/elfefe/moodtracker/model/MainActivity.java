@@ -13,9 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.controller.AutoCompleteManager;
 import com.moodtracker.elfefe.moodtracker.controller.GestureListener;
-import com.moodtracker.elfefe.moodtracker.controller.LoaderMainView;
 import com.moodtracker.elfefe.moodtracker.controller.MessageManager;
 
 import static java.lang.System.out;

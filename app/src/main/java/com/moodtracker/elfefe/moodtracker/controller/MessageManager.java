@@ -25,10 +25,12 @@ public class MessageManager {
 
     public void commentManager(){
 
+        SmsManager smsManager =  SmsManager.getDefault();
+
         setPendingIntent();
 
         if(!autoCompleteTextView.getText().toString().equals("")){
-            SmsManager.getDefault().sendTextMessage(autoCompleteTextView.getText().toString(),
+            smsManager.sendTextMessage(autoCompleteTextView.getText().toString(),
                     null,state = editText.getText().toString(),
                     pendingIntent,
                     null);
@@ -45,10 +47,11 @@ public class MessageManager {
     }
 
     private void setPendingIntent() {
+        Intent intent = new Intent();
         pendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
-                new Intent()
+                intent
                         .setData(RingtoneManager
                                 .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)),
                 0

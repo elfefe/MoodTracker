@@ -1,7 +1,8 @@
 package com.moodtracker.elfefe.moodtracker;
 
 import com.moodtracker.elfefe.moodtracker.controller.GestureListener;
-import com.moodtracker.elfefe.moodtracker.controller.LoaderMainView;
+import com.moodtracker.elfefe.moodtracker.model.LoaderMainView;
+import com.moodtracker.elfefe.moodtracker.controller.MessageManager;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 import org.junit.Test;
@@ -14,8 +15,6 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
-
-
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
@@ -28,5 +27,11 @@ public class ExampleUnitTest {
                                                                               null,
                                                                                   null));
         assertEquals(1,gestureListener.getValueX());
+    }
+    @Test
+    public void MessageManager_return_state(){
+        String state = "fonctionne";
+        MessageManager messageManager = new MessageManager(null,state,null,null);
+        assertEquals(state, messageManager.getState());
     }
 }

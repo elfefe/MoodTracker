@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import com.moodtracker.elfefe.moodtracker.model.LoaderMainView;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 public class GestureListener implements GestureDetector.OnGestureListener {

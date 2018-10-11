@@ -1,4 +1,4 @@
-package com.moodtracker.elfefe.moodtracker.controller;
+package com.moodtracker.elfefe.moodtracker.model;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,19 +7,19 @@ import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 
-public class AutoCompleteManager {
+class AutoCompleteManager {
     private Context context;
     private Cursor cursor;
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> arrayAdapter;
 
 
-    public AutoCompleteManager(Context context) {
+    AutoCompleteManager(Context context) {
         this.context = context;
         arrayList = new ArrayList<>();
     }
 
-    public ArrayAdapter autoCompleteAdapter(){
+    ArrayAdapter autoCompleteAdapter(){
 
         setCursor();
         setArrayList();
