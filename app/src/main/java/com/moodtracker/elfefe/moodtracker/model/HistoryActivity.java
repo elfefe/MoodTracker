@@ -1,13 +1,12 @@
 package com.moodtracker.elfefe.moodtracker.model;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
+import com.moodtracker.elfefe.moodtracker.controller.HistoryOnClick;
 import com.moodtracker.elfefe.moodtracker.local.CommentRealm;
 
 import java.util.ArrayList;
@@ -85,42 +84,16 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(mTextView2);
         allTextView.add(mTextView1);
 
+        HistoryOnClick historyOnClick = new HistoryOnClick(this,query);
+
         if (query.findAll().size() != 0) {
             int x = 0;
             if (query.findAll().size() >= 7)
                 x = query.findAll().size() - 7;
             while(x < query.findAll().size()) {
-                onClick(allTextView.get(x), x);
+                historyOnClick.onClick(allTextView.get(x), x);
                 x++;
             }
         }
-    }
-    private void onClick(TextView textView,int position){
-
-        CommentRealm dbGet = query.findAll().get(position);
-
-        assert dbGet != null;
-        textView.setBackgroundColor(getResources().getColor(dbGet.getFeeling()));
-
-        textView.setOnClickListener(v -> Toast.makeText(
-                                            this,
-                                                    dbGet.getComment(),
-                                                    Toast.LENGTH_LONG)
-                                                .show()
-                                    );
-
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
-        textView.setLayoutParams(layoutParams);
-
-        if (dbGet.getFeeling() ==  Mood.HAPPY.getColor())
-            layoutParams.matchConstraintPercentWidth =  1;
-        else if (dbGet.getFeeling() ==  Mood.GOOD.getColor())
-            layoutParams.matchConstraintPercentWidth =  0.8f;
-        else if (dbGet.getFeeling() ==  Mood.AVERAGE.getColor())
-            layoutParams.matchConstraintPercentWidth =  0.6f;
-        else if (dbGet.getFeeling() ==  Mood.SAD.getColor())
-            layoutParams.matchConstraintPercentWidth =  0.4f;
-        else if (dbGet.getFeeling() ==  Mood.ANGRY.getColor())
-            layoutParams.matchConstraintPercentWidth =  0.2f;
     }
 }
