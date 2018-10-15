@@ -1,22 +1,22 @@
-package com.moodtracker.elfefe.moodtracker.local;
+package com.moodtracker.elfefe.moodtracker.dao;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class CommentRealm extends RealmObject {
     @PrimaryKey
-    private int date;
+    private int id;
 
     private String comment;
     private int feeling;
 
 
-    public int getDate() {
-        return date;
+    public int getId() {
+        return id;
     }
 
-    public void setDate(int date) {
-        this.date = date;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getComment() {

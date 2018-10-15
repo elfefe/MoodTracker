@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/good"
-            app:srcCompat="@drawable/good" />
+            app:srcCompat="@drawable/good" />   
 
         <ImageButton
             android:id="@+id/imageHistory"

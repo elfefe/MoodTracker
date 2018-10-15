@@ -4,11 +4,11 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-import com.moodtracker.elfefe.moodtracker.model.LoaderMainView;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 public class GestureListener implements GestureDetector.OnGestureListener {
-    private int valueX = 1;
+    final private static int MOOD_DEFAULT = 1;
+    private int valueX = MOOD_DEFAULT;
     private LoaderMainView loaderMainView;
 
     public GestureListener(LoaderMainView loaderMainView){
@@ -42,14 +42,12 @@ public class GestureListener implements GestureDetector.OnGestureListener {
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (velocityY < 0 && valueX <4){
+            if (velocityY < 0 && valueX < Mood.values().length-1){
                 valueX++;
-                Log.d("GESTURE:", String.valueOf(valueX));
                 loaderMainView.setFeeling(Mood.values()[valueX].getColor(),Mood.values()[valueX].getFeeling());
             }
-            if (velocityY > 0 && valueX >0){
+            if (velocityY > 0 && valueX > 0){
                 valueX--;
-                Log.d("GESTURE:", String.valueOf(valueX));
                 loaderMainView.setFeeling(Mood.values()[valueX].getColor(),Mood.values()[valueX].getFeeling());
             }
         return false;

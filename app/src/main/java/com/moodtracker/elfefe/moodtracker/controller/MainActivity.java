@@ -1,4 +1,4 @@
-package com.moodtracker.elfefe.moodtracker.model;
+package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,15 +13,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.controller.GestureListener;
-import com.moodtracker.elfefe.moodtracker.controller.MessageManager;
+import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String state;
-    private int feel;
+    private String comment = "";
+    private int feeling = 0;
 
     public static final String STATE_KEY  = "STATE_KEY";
     public static final String FEEL_KEY = "FEEL_KEY";
@@ -45,32 +45,38 @@ public class MainActivity extends AppCompatActivity {
 
         GestureListener gestureListener = new GestureListener(mainView);
 
-        mainView.setFeeling(Mood.GOOD.getColor(),Mood.GOOD.getFeeling());
 
         mGestureDetector = new GestureDetector(this,gestureListener);
 
+        StateStore stateStore = new StateStore(this);
+        LastMood lastMood = new LastMood(stateStore);
+
+        if (stateStore.getQuery().findAll().size() == 0)
+            mainView.setFeeling(Mood.GOOD.getColor(),Mood.GOOD.getFeeling());
+        else
+            mainView.setFeeling(lastMood.getMoodColor(),lastMood.getMoodFeeling());
 
         mImageComment.setOnClickListener(v -> {
 
-            final EditText comment = new EditText(this);
+            final EditText etComment = new EditText(this);
             final AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
             final AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
-            final MessageManager messageManager = new MessageManager(this, state,autoCompleteTextView,comment);
+            final MessageManager messageManager = new MessageManager(this, this.comment,autoCompleteTextView,etComment);
 
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
 
-            new AlertDialog.Builder(this).setTitle("Commentaire")
-                    .setView(comment)
-                    .setNeutralButton("Annuler", (dialog, which) -> {})
-                    .setNegativeButton("Valilder", (dialog, which) ->
-                        state = comment.getText().toString())
-                    .setPositiveButton("Partager", (dialog, which) ->
+            new AlertDialog.Builder(this).setTitle(R.string.commentaire_title_bld)
+                    .setView(etComment)
+                    .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {})
+                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) ->
+                        this.comment = etComment.getText().toString())
+                    .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
                         new AlertDialog.Builder(this)
-                            .setTitle("Numéro")
+                            .setTitle(R.string.message_title_bld)
                             .setView(autoCompleteTextView)
-                            .setPositiveButton("Envoyer", ((dialog1, which1) -> {
-                                messageManager.commentManager();
-                                state = messageManager.getState();
+                            .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
+                                messageManager.sendMessage();
+                                this.comment = messageManager.getState();
                             }))
                             .setCancelable(true)
                             .create()
@@ -82,12 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
         mImageHistory.setOnClickListener(v ->{
 
-            feel = Mood.values()[gestureListener.getValueX()].getColor();
+
+            feeling = Mood.values()[gestureListener.getValueX()].getColor();
+
+            stateStore.setCommentRealm(comment,feeling);
+            stateStore.realmTransationCopyOrUpdate();
 
             Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-
-            intent.putExtra(STATE_KEY, state);
-            intent.putExtra(FEEL_KEY,feel);
 
             startActivity(intent);
 

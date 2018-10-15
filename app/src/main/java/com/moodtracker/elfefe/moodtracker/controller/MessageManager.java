@@ -9,6 +9,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.moodtracker.elfefe.moodtracker.R;
+
 public class MessageManager {
     private Context context;
     private String state;
@@ -23,7 +25,7 @@ public class MessageManager {
         this.editText = editText;
     }
 
-    public void commentManager(){
+    public void sendMessage(){
 
         SmsManager smsManager =  SmsManager.getDefault();
 
@@ -31,14 +33,15 @@ public class MessageManager {
 
         if(!autoCompleteTextView.getText().toString().equals("")){
             smsManager.sendTextMessage(autoCompleteTextView.getText().toString(),
-                    null,state = editText.getText().toString(),
+                    null,
+                    state = editText.getText().toString(),
                     pendingIntent,
                     null);
             state = editText.getText().toString();
         }else
             Toast.makeText(
                     context,
-                    "Veuillez entrer un numéro de téléphone.",
+                    R.string.messagemanager_erreur_toast,
                     Toast.LENGTH_SHORT).show();
     }
 
@@ -51,9 +54,8 @@ public class MessageManager {
         pendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
-                intent
-                        .setData(RingtoneManager
-                                .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)),
+                intent.setData(RingtoneManager
+                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)),
                 0
         );
     }

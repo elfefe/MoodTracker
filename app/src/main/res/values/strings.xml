@@ -11,4 +11,11 @@
     <string name="history_text7" >Hier</string>
     <string name="description_btn">The message you\'ve registered this day.</string>
     <string name="good">to do bem</string>
+    <string name="commentaire_title_bld">Commentaire</string>
+    <string name="commentaire_neutral_bld">Annuler</string>
+    <string name="commentaire_negative_bld">Valider</string>
+    <string name="commentaire_positive_bld">Partager</string>
+    <string name="message_title_bld">Numéro</string>
+    <string name="message_positive_bld">Envoyer</string>
+    <string name="messagemanager_erreur_toast">Veuillez entrer un numéro de téléphone.</string>
 </resources>

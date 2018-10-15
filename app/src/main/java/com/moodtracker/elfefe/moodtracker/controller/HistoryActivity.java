@@ -1,4 +1,4 @@
-package com.moodtracker.elfefe.moodtracker.model;
+package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,26 +6,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.controller.HistoryOnClick;
-import com.moodtracker.elfefe.moodtracker.local.CommentRealm;
+import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
+import com.moodtracker.elfefe.moodtracker.dao.HistoryOnClickListener;
+import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
-import io.realm.Realm;
 import io.realm.RealmQuery;
 
-import static com.moodtracker.elfefe.moodtracker.model.MainActivity.FEEL_KEY;
-import static com.moodtracker.elfefe.moodtracker.model.MainActivity.STATE_KEY;
+import static com.moodtracker.elfefe.moodtracker.controller.MainActivity.FEEL_KEY;
+import static com.moodtracker.elfefe.moodtracker.controller.MainActivity.STATE_KEY;
 import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
-
-    RealmQuery<CommentRealm> query;
-
-    String comment = null;
-    int feeling;
-
     TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5,mTextView6,mTextView7;
     ImageButton mImageButton1,mImageButton2,mImageButton3,mImageButton4,mImageButton5,mImageButton6,mImageButton7;
 
@@ -37,26 +30,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         out.println("HistoryActivity::onCreate()");
 
-        comment = getIntent().getStringExtra(STATE_KEY);
-        feeling = getIntent().getIntExtra(FEEL_KEY,0);
-
-        Calendar cal = Calendar.getInstance();
-        Integer date = cal.get(Calendar.DAY_OF_MONTH);
-
-        Realm.init(getApplicationContext());
-        Realm realm = Realm.getDefaultInstance();
-        query = realm.where(CommentRealm.class);
-
-        CommentRealm commentRealm = new CommentRealm();
-
-        commentRealm.setDate(date);
-        commentRealm.setComment(comment);
-        commentRealm.setFeeling(feeling);
-
-
-
-        if (comment != null)
-            realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(commentRealm));
+        StateStore stateStore = new StateStore(this);
 
         mTextView1 = findViewById(R.id.comment1);
         mTextView2 = findViewById(R.id.comment2);
@@ -84,14 +58,14 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(mTextView2);
         allTextView.add(mTextView1);
 
-        HistoryOnClick historyOnClick = new HistoryOnClick(this,query);
+        HistoryOnClickListener historyOnClickListener = new HistoryOnClickListener(this,stateStore.getQuery());
 
-        if (query.findAll().size() != 0) {
+        if (stateStore.getQuery().findAll().size() != 0) {
             int x = 0;
-            if (query.findAll().size() >= 7)
-                x = query.findAll().size() - 7;
-            while(x < query.findAll().size()) {
-                historyOnClick.onClick(allTextView.get(x), x);
+            if (stateStore.getQuery().findAll().size() >= allTextView.size())
+                x = stateStore.getQuery().findAll().size() - allTextView.size();
+            while(x < stateStore.getQuery().findAll().size()) {
+                historyOnClickListener.onClick(allTextView.get(x), x);
                 x++;
             }
         }

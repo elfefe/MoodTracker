@@ -1,4 +1,4 @@
-package com.moodtracker.elfefe.moodtracker.model;
+package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -49,10 +49,10 @@ class AutoCompleteManager {
         assert cursor != null;
         while (cursor.moveToNext()){
             arrayList.add(
-                    ContactsContract
+                    cursor.getString(cursor.getColumnIndex(ContactsContract
                             .CommonDataKinds
                             .Phone
-                            .NUMBER
+                            .NUMBER))
             );
         }
     }

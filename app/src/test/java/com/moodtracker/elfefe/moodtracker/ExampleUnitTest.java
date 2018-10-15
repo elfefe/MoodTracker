@@ -1,7 +1,7 @@
 package com.moodtracker.elfefe.moodtracker;
 
 import com.moodtracker.elfefe.moodtracker.controller.GestureListener;
-import com.moodtracker.elfefe.moodtracker.model.LoaderMainView;
+import com.moodtracker.elfefe.moodtracker.controller.LoaderMainView;
 import com.moodtracker.elfefe.moodtracker.controller.MessageManager;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
@@ -16,10 +16,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
-    }
-    @Test
     public void mood_get_five_objects(){assertEquals(5, Mood.values().length);}
     @Test
     public void gesturelistener_valueX_begin_with_one(){
@@ -33,5 +29,9 @@ public class ExampleUnitTest {
         String state = "fonctionne";
         MessageManager messageManager = new MessageManager(null,state,null,null);
         assertEquals(state, messageManager.getState());
+    }
+    @Test
+    public void gesturelistener_onfling_velocity_up_to_bottom_negative(){
+
     }
 }
