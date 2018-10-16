@@ -16,7 +16,6 @@ public class StateStore {
     private Integer date;
 
     private String comment;
-    private int feeling;
 
     public StateStore(Context context) {
         this.context = context;
@@ -41,7 +40,6 @@ public class StateStore {
 
     public void setCommentRealm(String comment,int feeling) {
         this.comment = comment;
-        this.feeling = feeling;
         commentRealm = new CommentRealm();
         commentRealm.setId(date);
         commentRealm.setComment(comment);

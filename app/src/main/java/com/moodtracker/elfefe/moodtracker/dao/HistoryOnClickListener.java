@@ -7,8 +7,6 @@ import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
-import io.realm.RealmQuery;
-
 public class HistoryOnClickListener {
 
     private static  final float WIDTH_100_PERCENT = 1f;
@@ -16,12 +14,19 @@ public class HistoryOnClickListener {
     private static  final float WIDTH_60_PERCENT = 0.6f;
     private static  final float WIDTH_40_PERCENT = 0.4f;
     private static  final float WIDTH_20_PERCENT = 0.2f;
+    
+    private int feeling;
 
-    public HistoryOnClickListener(Context context, RealmQuery<CommentRealm> realmQuery,TextView textView, int position) {
-        CommentRealm dbGet = realmQuery.findAll().get(position);
+    public HistoryOnClickListener(Context context, StateStore stateStore,TextView textView, int position) {
 
-        if (dbGet != null) {
-            textView.setBackgroundColor(context.getResources().getColor(dbGet.getFeeling()));
+        CommentRealm dbGet = stateStore.getQuery().findAll().get(position);
+
+        assert dbGet != null;
+        feeling = dbGet.getFeeling();
+        
+
+        if (dbGet.getId() != stateStore.getDate()) {
+            textView.setBackgroundColor(context.getResources().getColor(feeling));
 
             textView.setOnClickListener(v -> Toast.makeText(
                     context,
@@ -33,16 +38,22 @@ public class HistoryOnClickListener {
             ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
             textView.setLayoutParams(layoutParams);
 
-            if (dbGet.getFeeling() == Mood.HAPPY.getColor())
-                layoutParams.matchConstraintPercentWidth = WIDTH_100_PERCENT;
-            else if (dbGet.getFeeling() == Mood.GOOD.getColor())
-                layoutParams.matchConstraintPercentWidth = WIDTH_80_PERCENT;
-            else if (dbGet.getFeeling() == Mood.AVERAGE.getColor())
-                layoutParams.matchConstraintPercentWidth = WIDTH_60_PERCENT;
-            else if (dbGet.getFeeling() == Mood.SAD.getColor())
-                layoutParams.matchConstraintPercentWidth = WIDTH_40_PERCENT;
-            else if (dbGet.getFeeling() == Mood.ANGRY.getColor())
-                layoutParams.matchConstraintPercentWidth = WIDTH_20_PERCENT;
+            layoutParams.matchConstraintPercentWidth = getFeelingPercent();
         }
+    }
+    
+    private float getFeelingPercent(){
+        if (feeling == Mood.HAPPY.getColor())
+            return WIDTH_100_PERCENT;
+        else if (feeling == Mood.GOOD.getColor())
+            return WIDTH_80_PERCENT;
+        else if (feeling == Mood.AVERAGE.getColor())
+            return WIDTH_60_PERCENT;
+        else if (feeling == Mood.SAD.getColor())
+            return WIDTH_40_PERCENT;
+        else if (feeling == Mood.ANGRY.getColor())
+            return WIDTH_20_PERCENT;
+        else
+            return 0;
     }
 }

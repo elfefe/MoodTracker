@@ -11,10 +11,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+
+import java.util.Objects;
 
 import static java.lang.System.out;
 
@@ -99,6 +102,21 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+
+        if (Objects.requireNonNull(stateStore
+                .getQuery()
+                .findAll()
+                .get(stateStore.getQuery().findAll().size() - 1))
+                .getId() == stateStore.getDate()){
+            Toast.makeText(
+                    this,
+                    Objects.requireNonNull(stateStore.getQuery()
+                            .findAll()
+                            .get(stateStore.getQuery().findAll().size() - 1))
+                            .getComment(),
+                    Toast.LENGTH_LONG)
+                .show();
+        }
     }
 
 

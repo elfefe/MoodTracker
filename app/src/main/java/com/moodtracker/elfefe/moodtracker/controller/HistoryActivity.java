@@ -59,7 +59,7 @@ public class HistoryActivity extends AppCompatActivity {
             if (stateStore.getQuery().findAll().size() >= allTextView.size())
                 x = stateStore.getQuery().findAll().size() - allTextView.size();
             while(x < stateStore.getQuery().findAll().size()) {
-                 new HistoryOnClickListener(this,stateStore.getQuery(),allTextView.get(x), x);
+                 new HistoryOnClickListener(this,stateStore,allTextView.get(x), x);
                 x++;
             }
         }
