@@ -32,7 +32,7 @@ class AutoCompleteManager {
 
 
     private void setCursor() {
-        this.cursor = context.getContentResolver().query(
+        cursor = context.getContentResolver().query(
                 ContactsContract
                         .CommonDataKinds
                         .Phone
@@ -58,7 +58,7 @@ class AutoCompleteManager {
     }
 
     private void setArrayAdapter() {
-        this.arrayAdapter = new ArrayAdapter<>(
+        arrayAdapter = new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_list_item_1,
                 arrayList);

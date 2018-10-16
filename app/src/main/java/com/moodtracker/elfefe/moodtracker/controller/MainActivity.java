@@ -13,8 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
+import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 
 import static java.lang.System.out;
 

@@ -6,16 +6,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
 import com.moodtracker.elfefe.moodtracker.dao.HistoryOnClickListener;
 import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 
 import java.util.ArrayList;
 
-import io.realm.RealmQuery;
-
-import static com.moodtracker.elfefe.moodtracker.controller.MainActivity.FEEL_KEY;
-import static com.moodtracker.elfefe.moodtracker.controller.MainActivity.STATE_KEY;
 import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -58,14 +53,13 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(mTextView2);
         allTextView.add(mTextView1);
 
-        HistoryOnClickListener historyOnClickListener = new HistoryOnClickListener(this,stateStore.getQuery());
 
         if (stateStore.getQuery().findAll().size() != 0) {
             int x = 0;
             if (stateStore.getQuery().findAll().size() >= allTextView.size())
                 x = stateStore.getQuery().findAll().size() - allTextView.size();
             while(x < stateStore.getQuery().findAll().size()) {
-                historyOnClickListener.onClick(allTextView.get(x), x);
+                 new HistoryOnClickListener(this,stateStore.getQuery(),allTextView.get(x), x);
                 x++;
             }
         }

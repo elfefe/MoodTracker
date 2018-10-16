@@ -1,17 +1,18 @@
 package com.moodtracker.elfefe.moodtracker.controller;
 
-import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
+import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 
 import java.util.Objects;
 
-public class LastMood {
+class LastMood {
     private Integer feeling;
 
     LastMood(StateStore stateStore) {
-        feeling = Objects.requireNonNull(stateStore.getQuery().findAll().get(stateStore.getQuery().findAll().size()-1)).getFeeling();
+        if (stateStore.getQuery().findAll().size() > 0)
+            feeling = Objects.requireNonNull(stateStore.getQuery().findAll().get(stateStore.getQuery().findAll().size()-1)).getFeeling();
     }
-    public Integer getMoodFeeling(){
+    Integer getMoodFeeling(){
         if (feeling ==  Mood.HAPPY.getColor())
             return Mood.HAPPY.getFeeling();
         else if (feeling ==  Mood.GOOD.getColor())
@@ -26,7 +27,7 @@ public class LastMood {
             return null;
     }
 
-    public Integer getMoodColor() {
+    Integer getMoodColor() {
         if (feeling ==  Mood.HAPPY.getColor())
             return Mood.HAPPY.getColor();
         else if (feeling ==  Mood.GOOD.getColor())

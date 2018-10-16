@@ -25,7 +25,7 @@ public class MessageManager {
         this.editText = editText;
     }
 
-    public void sendMessage(){
+    void sendMessage(){
 
         SmsManager smsManager =  SmsManager.getDefault();
 
