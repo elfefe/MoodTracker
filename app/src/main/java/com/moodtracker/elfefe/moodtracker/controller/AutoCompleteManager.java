@@ -3,31 +3,31 @@ package com.moodtracker.elfefe.moodtracker.controller;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.widget.ArrayAdapter;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 class AutoCompleteManager {
     private Context context;
     private Cursor cursor;
-    private ArrayList<String> arrayList;
-    private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<Contacts> contactList;
+    private AutoCompleteAdapter autoCompleteAdapter;
 
 
     AutoCompleteManager(Context context) {
         this.context = context;
-        arrayList = new ArrayList<>();
+        contactList = new ArrayList<>();
     }
 
-    ArrayAdapter autoCompleteAdapter(){
+    AutoCompleteAdapter autoCompleteAdapter(){
 
         setCursor();
         setArrayList();
-        setArrayAdapter();
+        setAdapter();
 
         cursor.close();
 
-        return arrayAdapter;
+        return autoCompleteAdapter;
     }
 
 
@@ -48,19 +48,26 @@ class AutoCompleteManager {
     private void setArrayList() {
         assert cursor != null;
         while (cursor.moveToNext()){
-            arrayList.add(
-                    cursor.getString(cursor.getColumnIndex(ContactsContract
-                            .CommonDataKinds
-                            .Phone
-                            .NUMBER))
+            Contacts contacts = new Contacts(cursor.getString(cursor.getColumnIndex(ContactsContract
+                        .CommonDataKinds
+                        .Phone
+                        .DISPLAY_NAME_ALTERNATIVE))
+                    ,cursor.getString(cursor.getColumnIndex(ContactsContract
+                        .CommonDataKinds
+                        .Phone
+                        .NUMBER))
+                    ,cursor.getString(cursor.getColumnIndex(ContactsContract
+                        .CommonDataKinds
+                        .Phone
+                        .PHOTO_THUMBNAIL_URI))
             );
+            contactList.add(contacts);
+            Log.d("CONTACTS*********: ", contactList.get(contactList.size()-1).toString());
         }
     }
 
-    private void setArrayAdapter() {
-        arrayAdapter = new ArrayAdapter<>(
-                context,
-                android.R.layout.simple_list_item_1,
-                arrayList);
+    private void setAdapter() {
+        autoCompleteAdapter = new AutoCompleteAdapter(
+                context, contactList);
     }
 }

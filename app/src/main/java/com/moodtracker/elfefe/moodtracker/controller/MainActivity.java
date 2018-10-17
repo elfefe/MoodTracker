@@ -26,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private String comment = "";
     private int feeling = 0;
 
-    public static final String STATE_KEY  = "STATE_KEY";
-    public static final String FEEL_KEY = "FEEL_KEY";
-
     private GestureDetector mGestureDetector;
 
     @Override
@@ -59,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         else
             mainView.setFeeling(lastMood.getMoodColor(),lastMood.getMoodFeeling());
 
+        // Save your state or share it with the world
         mImageComment.setOnClickListener(v -> {
 
             final EditText etComment = new EditText(this);
@@ -68,11 +66,17 @@ public class MainActivity extends AppCompatActivity {
 
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
 
+            autoCompleteTextView.setOnClickListener(v1 -> {
+
+            });
+
             new AlertDialog.Builder(this).setTitle(R.string.commentaire_title_bld)
                     .setView(etComment)
                     .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {})
+                    // Save it
                     .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) ->
                         this.comment = etComment.getText().toString())
+                    // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
                         new AlertDialog.Builder(this)
                             .setTitle(R.string.message_title_bld)
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         });
 
+        // HistoryActivity intent
         mImageHistory.setOnClickListener(v ->{
 
 
@@ -103,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        // If the last state saved is today show it in a toast
         if (Objects.requireNonNull(stateStore
                 .getQuery()
                 .findAll()

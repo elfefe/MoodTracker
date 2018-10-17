@@ -31,7 +31,7 @@ public class CommentRealm extends RealmObject {
         return feeling;
     }
 
-    public void setFeeling(int feeling) {
+    void setFeeling(int feeling) {
         this.feeling = feeling;
     }
 }

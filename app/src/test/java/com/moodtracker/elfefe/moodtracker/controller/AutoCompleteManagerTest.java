@@ -6,6 +6,8 @@ import android.widget.ArrayAdapter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -14,10 +16,17 @@ import static org.mockito.Mockito.spy;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AutoCompleteManagerTest {
+
     private Context context = spy(MainActivity.class);
     private Cursor cursor;
     private ArrayList<String> arrayList;
     private ArrayAdapter<String> arrayAdapter;
+    @Mock
+    private ArrayList<Contacts> contacts;
+    @Mock
+    private AutoCompleteAdapter autoCompleteAdapter;
+    @InjectMocks
+    private AutoCompleteManager underTest;
 
     public void setArrayList() {
         arrayList.add("test1");
@@ -34,19 +43,6 @@ public class AutoCompleteManagerTest {
 
     @Test
     public void cursor_is_not_null(){
-//        cursor = context.getContentResolver().query(
-//                ContactsContract
-//                        .CommonDataKinds
-//                        .Phone
-//                        .CONTENT_URI,
-//                null,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
-//
-//        assertNotNull(cursor);
     }
 
     @Test
