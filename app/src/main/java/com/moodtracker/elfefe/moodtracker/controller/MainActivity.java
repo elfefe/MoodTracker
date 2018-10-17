@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.model.Mood;
 import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 import java.util.Objects;
 
@@ -66,9 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
 
-            autoCompleteTextView.setOnClickListener(v1 -> {
-
-            });
+            autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
+                    autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getmNumber()));
 
             new AlertDialog.Builder(this).setTitle(R.string.commentaire_title_bld)
                     .setView(etComment)

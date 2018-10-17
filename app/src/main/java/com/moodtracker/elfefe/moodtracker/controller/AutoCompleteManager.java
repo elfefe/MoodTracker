@@ -56,14 +56,15 @@ class AutoCompleteManager {
                         .CommonDataKinds
                         .Phone
                         .NUMBER))
-                    ,cursor.getString(cursor.getColumnIndex(ContactsContract
-                        .CommonDataKinds
-                        .Phone
-                        .PHOTO_THUMBNAIL_URI))
             );
+
             contactList.add(contacts);
             Log.d("CONTACTS*********: ", contactList.get(contactList.size()-1).toString());
         }
+
+    }
+    Contacts getContacts(int position){
+        return contactList.get(position);
     }
 
     private void setAdapter() {

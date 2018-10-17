@@ -18,4 +18,6 @@
     <string name="message_title_bld">Numéro</string>
     <string name="message_positive_bld">Envoyer</string>
     <string name="messagemanager_erreur_toast">Veuillez entrer un numéro de téléphone.</string>
+    <string name="autocomplet_name_tv">name</string>
+    <string name="autocomplet_number_tv">number</string>
 </resources>

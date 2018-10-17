@@ -3,17 +3,15 @@ package com.moodtracker.elfefe.moodtracker.controller;
 public class Contacts {
     private String mName;
     private String mNumber;
-    private String mImage;
 
 
-    public Contacts(String mName, String mNumber, String mImage) {
+    Contacts(String mName, String mNumber) {
         this.mName = mName;
         this.mNumber = mNumber;
-        this.mImage = mImage;
     }
 
 
-    public String getmName() {
+    String getmName() {
         return mName;
     }
 
@@ -21,19 +19,11 @@ public class Contacts {
         this.mName = mName;
     }
 
-    public String getmNumber() {
+    String getmNumber() {
         return mNumber;
     }
 
     public void setmNumber(String mNumber) {
         this.mNumber = mNumber;
-    }
-
-    public String getmImage() {
-        return mImage;
-    }
-
-    public void setmImage(String mImage) {
-        this.mImage = mImage;
     }
 }
