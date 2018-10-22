@@ -45,13 +45,12 @@ public class MainActivity extends AppCompatActivity {
 
         GestureListener gestureListener = new GestureListener(mainView);
 
-
         mGestureDetector = new GestureDetector(this,gestureListener);
 
         StateStore stateStore = new StateStore(this);
         LastMood lastMood = new LastMood(stateStore);
 
-        if (stateStore.getQuery().findAll().size() == 0)
+        if (stateStore.getQuery().findAll().isEmpty())
             mainView.setFeeling(Mood.GOOD.getColor(),Mood.GOOD.getFeeling());
         else
             mainView.setFeeling(lastMood.getMoodColor(),lastMood.getMoodFeeling());
@@ -73,8 +72,13 @@ public class MainActivity extends AppCompatActivity {
                     .setView(etComment)
                     .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {})
                     // Save it
-                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) ->
-                        this.comment = etComment.getText().toString())
+                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) ->{
+                        this.comment = etComment.getText().toString();
+
+                        feeling = Mood.values()[gestureListener.getValueX()].getColor();
+                        stateStore.setCommentRealm(comment,feeling);
+                        stateStore.realmTransationCopyOrUpdate();
+                    })
                     // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
                         new AlertDialog.Builder(this)
@@ -83,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
                             .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
                                 messageManager.sendMessage();
                                 this.comment = messageManager.getState();
+
+                                feeling = Mood.values()[gestureListener.getValueX()].getColor();
+                                stateStore.setCommentRealm(comment,feeling);
+                                stateStore.realmTransationCopyOrUpdate();
                             }))
                             .setCancelable(true)
                             .create()
@@ -93,19 +101,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // HistoryActivity intent
-        mImageHistory.setOnClickListener(v ->{
-
-
-            feeling = Mood.values()[gestureListener.getValueX()].getColor();
-
-            stateStore.setCommentRealm(comment,feeling);
-            stateStore.realmTransationCopyOrUpdate();
-
-            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-
-            startActivity(intent);
-
-        });
+        mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
         // If the last state saved is today show it in a toast
         if (Objects.requireNonNull(stateStore
