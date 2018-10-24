@@ -8,7 +8,5 @@
     <color name="angry">#DE3C50</color>
     <color name="average">#458AD9</color>
     <color name="sad">#9B9B9B</color>
-    <color name="view_color">#CACACA</color>
     <color name="crystal">#00000000</color>
-    <color name="empty">#541542</color>
 </resources>

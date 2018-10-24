@@ -35,8 +35,8 @@ public class MessageManager {
             smsManager.sendTextMessage(autoCompleteTextView.getText().toString(),
                     null,
                     state = editText.getText().toString(),
-                    pendingIntent,
-                    null);
+                    null,
+                    pendingIntent);
             state = editText.getText().toString();
         }else
             Toast.makeText(
@@ -50,12 +50,11 @@ public class MessageManager {
     }
 
     private void setPendingIntent() {
-        Intent intent = new Intent();
         pendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
-                intent.setData(RingtoneManager
-                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)),
+               new Intent(Intent.ACTION_VIEW).setDataAndType(RingtoneManager
+                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),"audio/*"),
                 0
         );
     }

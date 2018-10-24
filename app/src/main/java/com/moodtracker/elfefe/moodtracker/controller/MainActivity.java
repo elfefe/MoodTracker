@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             .get(stateStore.getQuery().findAll().size() - 1))
                             .getComment(),
                     Toast.LENGTH_LONG)
-                .show();
+                    .show();
         }
     }
 
