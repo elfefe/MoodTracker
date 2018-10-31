@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private String comment = "";
     private int feeling = 0;
 
-    private GestureDetector mGestureDetector;
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +36,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        ConstraintLayout main = findViewById(R.id.mainView);
+        ConstraintLayout mConstraintLayout = findViewById(R.id.mainView);
         ImageView mImage = findViewById(R.id.imageView);
         ImageButton mImageHistory = findViewById(R.id.imageHistory);
         ImageButton mImageComment = findViewById(R.id.imageComment);
 
-        LoaderMainView mainView = new LoaderMainView(this, main, mImage);
+        LoaderMainView mainView = new LoaderMainView(this, mConstraintLayout, mImage);
 
         GestureListener gestureListener = new GestureListener(mainView);
 
-        mGestureDetector = new GestureDetector(this,gestureListener);
+        gestureDetector = new GestureDetector(this,gestureListener);
 
         StateStore stateStore = new StateStore(this);
         LastMood lastMood = new LastMood(stateStore);
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        mGestureDetector.onTouchEvent(event);
+        gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event) ;
     }
 

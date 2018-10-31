@@ -57,6 +57,6 @@ public class StateStore {
 
     private void setDate(){
         Calendar calendar = Calendar.getInstance();
-        date = calendar.get(Calendar.DAY_OF_MONTH);
+        date = calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)+calendar.get(Calendar.DAY_OF_MONTH);
     }
 }

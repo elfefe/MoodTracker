@@ -23,23 +23,21 @@ public class HistoryOnClickListener {
 
         assert dbGet != null;
         feeling = dbGet.getFeeling();
-        
 
-        if (dbGet.getId() != stateStore.getDate()) {
-            textView.setBackgroundColor(context.getResources().getColor(feeling));
+        textView.setBackgroundColor(context.getResources().getColor(feeling));
 
-            textView.setOnClickListener(v -> Toast.makeText(
-                    context,
-                    dbGet.getComment(),
-                    Toast.LENGTH_LONG)
-                    .show()
-            );
+        textView.setOnClickListener(v -> Toast.makeText(
+                context,
+                dbGet.getComment(),
+                Toast.LENGTH_LONG)
+                .show()
+        );
 
-            ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
-            textView.setLayoutParams(layoutParams);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
+        textView.setLayoutParams(layoutParams);
 
-            layoutParams.matchConstraintPercentWidth = getFeelingPercent();
-        }
+        layoutParams.matchConstraintPercentWidth = getFeelingPercent();
+
     }
     
     private float getFeelingPercent(){
