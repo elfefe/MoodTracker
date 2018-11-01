@@ -55,23 +55,22 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(mTextView6);
         allTextView.add(mTextView7);
 
-
-        int dbSize = stateStore.getQuery().findAll().size() - 1;
+        int today = 1;
+        int dbSize = stateStore.getQuery().findAll().size() - today;
         if (dbSize != 0) {
             int allTVPosition = dbSize - allTextView.size();
-            int dbIdPosition = stateStore.getDate() - allTextView.size();
-            System.out.println(String.valueOf(dbIdPosition));
+            int dbIdPosition = (stateStore.getDate() - today) - allTextView.size();
+            int x = 0;
+            Log.d("TODAY IS: ", String.valueOf(stateStore.getDate()));
 
-            while(dbIdPosition <= stateStore.getDate() - 1) {
-                    if(allTVPosition > 0){
-                        if(dbIdPosition == Objects.requireNonNull(stateStore.getQuery().findAll().get(allTVPosition)).getId())
-                            new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition), allTVPosition);
+            while(dbIdPosition <= stateStore.getDate() - today) {
+                    if(allTVPosition >= 0){
+                        if(dbIdPosition == Objects.requireNonNull(stateStore.getQuery().findAll().get(allTVPosition)).getId()) {
+                            new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition + x), allTVPosition);
+                        }
                     }else
-                        new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition), allTVPosition);
+                        x++;
 
-                    Log.d("''''''ID-POSITION'''''",String.valueOf(dbIdPosition));
-                    Log.d("''''''''''HIER''''''''",String.valueOf(stateStore.getDate()-1));
-                    System.out.println(String.valueOf(allTVPosition + "   " + dbSize));
                     allTVPosition++;
                     dbIdPosition++;
             }

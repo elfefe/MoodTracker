@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/history_background"
+    tools:context=".controller.HistoryActivity">
+
+
+
+    <TextView
+        android:id="@+id/comment1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text1"
+        app:layout_constraintBottom_toTopOf="@+id/comment2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6"
+        tools:ignore="NotSibling" />
+    <ImageButton
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background="@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment1"
+        app:layout_constraintRight_toRightOf="@id/comment1"
+        android:contentDescription="@string/description_btn" />
+
+    <TextView
+        android:id="@+id/comment2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text2"
+        app:layout_constraintBottom_toTopOf="@+id/comment3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment1"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+    <ImageButton
+        android:id="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background = "@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment2"
+        app:layout_constraintRight_toRightOf="@id/comment2"
+        android:contentDescription="@string/description_btn" />
+
+    <TextView
+        android:id="@+id/comment3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text3"
+        app:layout_constraintBottom_toTopOf="@+id/comment4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment2"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+    <ImageButton
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background="@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment3"
+        app:layout_constraintRight_toRightOf="@id/comment3"
+        android:contentDescription="@string/description_btn" />
+
+    <TextView
+        android:id="@+id/comment4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text4"
+        app:layout_constraintBottom_toTopOf="@+id/comment5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment3"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+    <ImageButton
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background="@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment4"
+        app:layout_constraintRight_toRightOf="@id/comment4"
+        android:contentDescription="@string/description_btn" />
+
+    <TextView
+        android:id="@+id/comment5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text5"
+        app:layout_constraintBottom_toTopOf="@+id/comment6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment4"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+    <ImageButton
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background="@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment5"
+        app:layout_constraintRight_toRightOf="@id/comment5"
+        android:contentDescription="@string/description_btn" />
+
+    <TextView
+        android:id="@+id/comment6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text6"
+        app:layout_constraintBottom_toTopOf="@+id/comment7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment5"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+    <ImageButton
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background="@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment6"
+        app:layout_constraintRight_toRightOf="@id/comment6"
+        android:contentDescription="@string/description_btn" />
+
+    <TextView
+        android:id="@+id/comment7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/average"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text="@string/history_text7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.6" />
+    <ImageButton
+        android:id="@+id/btn7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ico_comment"
+        android:background="@color/crystal"
+        app:layout_constraintBottom_toBottomOf="@id/comment7"
+        app:layout_constraintRight_toRightOf="@id/comment7"
+        android:contentDescription="@string/description_btn" />
+
+</android.support.constraint.ConstraintLayout>
