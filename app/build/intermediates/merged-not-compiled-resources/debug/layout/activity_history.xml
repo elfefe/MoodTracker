@@ -67,7 +67,7 @@
         android:id="@+id/comment3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/average"
+        android:background="@color/good"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="3dp"
@@ -78,7 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment2"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.8" />
     <ImageButton
         android:id="@+id/btn3"
         android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
         android:id="@+id/comment4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/average"
+        android:background="@color/good"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="3dp"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/comment3"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.8" />
     <ImageButton
         android:id="@+id/btn4"
         android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
         android:id="@+id/comment5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/average"
+        android:background="@color/happy"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="3dp"
@@ -131,7 +131,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment4"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="1" />
     <ImageButton
         android:id="@+id/btn5"
         android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
         android:id="@+id/comment6"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/average"
+        android:background="@color/sad"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="3dp"
@@ -157,7 +157,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/comment5"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.4" />
     <ImageButton
         android:id="@+id/btn6"
         android:layout_width="wrap_content"
@@ -172,7 +172,7 @@
         android:id="@+id/comment7"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/average"
+        android:background="@color/angry"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="3dp"
@@ -183,7 +183,7 @@
         app:layout_constraintTop_toBottomOf="@+id/comment6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.6" />
+        app:layout_constraintWidth_percent="0.2" />
     <ImageButton
         android:id="@+id/btn7"
         android:layout_width="wrap_content"

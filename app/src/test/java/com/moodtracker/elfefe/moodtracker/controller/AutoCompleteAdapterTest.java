@@ -2,6 +2,8 @@ package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.util.Log;
 
+import com.moodtracker.elfefe.moodtracker.model.Contacts;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,8 +41,8 @@ public class AutoCompleteAdapterTest {
 
         copy.clear();
         for (Contacts contacts : copyAll) {
-            if(contacts.getmName().toLowerCase().contains(constraint.toLowerCase())
-                    || contacts.getmNumber().toLowerCase().contains(constraint.toLowerCase())){
+            if(contacts.getName().toLowerCase().contains(constraint.toLowerCase())
+                    || contacts.getNumber().toLowerCase().contains(constraint.toLowerCase())){
                 copy.add(contacts);
             }
         }

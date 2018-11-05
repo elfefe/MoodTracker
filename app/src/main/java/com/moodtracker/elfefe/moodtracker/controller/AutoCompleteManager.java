@@ -3,49 +3,46 @@ package com.moodtracker.elfefe.moodtracker.controller;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.util.Log;
+
+import com.moodtracker.elfefe.moodtracker.model.Contacts;
 
 import java.util.ArrayList;
 
 class AutoCompleteManager {
     private Context context;
-    private Cursor cursor;
-    private ArrayList<Contacts> contactList;
-    private AutoCompleteAdapter autoCompleteAdapter;
-
 
     AutoCompleteManager(Context context) {
         this.context = context;
-        contactList = new ArrayList<>();
     }
 
     AutoCompleteAdapter autoCompleteAdapter(){
+        Cursor cursor = cursor();
 
-        setCursor();
-        setArrayList();
-        setAdapter();
+        ArrayList<Contacts> contactsList = arrayList(cursor);
+
+        AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(context, contactsList);
 
         cursor.close();
 
         return autoCompleteAdapter;
     }
 
-
-    private void setCursor() {
-        cursor = context.getContentResolver().query(
-                ContactsContract
-                        .CommonDataKinds
-                        .Phone
-                        .CONTENT_URI,
-                null,
-                null,
-                null,
-                null,
-                null
+    private Cursor cursor(){
+        return context.getContentResolver().query(
+            ContactsContract
+                    .CommonDataKinds
+                    .Phone
+                    .CONTENT_URI,
+            null,
+            null,
+            null,
+            null,
+            null
         );
     }
 
-    private void setArrayList() {
+    private ArrayList<Contacts> arrayList(Cursor cursor) {
+        ArrayList<Contacts> contactList = new ArrayList<>();
         assert cursor != null;
         while (cursor.moveToNext()){
             Contacts contacts = new Contacts(cursor.getString(cursor.getColumnIndex(ContactsContract
@@ -59,16 +56,11 @@ class AutoCompleteManager {
             );
 
             contactList.add(contacts);
-            Log.d("CONTACTS*********: ", contactList.get(contactList.size()-1).toString());
         }
-
+        return contactList;
     }
+
     Contacts getContacts(int position){
-        return contactList.get(position);
-    }
-
-    private void setAdapter() {
-        autoCompleteAdapter = new AutoCompleteAdapter(
-                context, contactList);
+        return arrayList(cursor()).get(position);
     }
 }

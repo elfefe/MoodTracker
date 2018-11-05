@@ -11,6 +11,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
+import com.moodtracker.elfefe.moodtracker.model.Contacts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,15 +50,15 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
     private Filter nameFilter = new Filter() {
         @Override
         public String convertResultToString(Object resultValue) {
-            return ((Contacts)(resultValue)).getmName();
+            return ((Contacts)(resultValue)).getName();
         }
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if(constraint != null) {
                 items.clear();
                 for (Contacts contacts : contactsAll) {
-                    if(contacts.getmName().toLowerCase().contains(constraint.toString().toLowerCase())
-                        || contacts.getmNumber().toLowerCase().contains(constraint.toString().toLowerCase())){
+                    if(contacts.getName().toLowerCase().contains(constraint.toString().toLowerCase())
+                        || contacts.getNumber().toLowerCase().contains(constraint.toString().toLowerCase())){
                         items.add(contacts);
                     }
                 }
@@ -92,10 +93,10 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
         Contacts contacts = contactsList.get(position);
 
         TextView name = listItem.findViewById(R.id.name);
-        name.setText(contacts.getmName());
+        name.setText(contacts.getName());
 
         TextView number = listItem.findViewById(R.id.number);
-        number.setText(contacts.getmNumber());
+        number.setText(contacts.getNumber());
 
         return listItem;
     }

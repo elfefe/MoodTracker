@@ -16,8 +16,8 @@ import java.util.Objects;
 import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
-    TextView mTextView1,mTextView2,mTextView3,mTextView4,mTextView5,mTextView6,mTextView7;
-    ImageButton mImageButton1,mImageButton2,mImageButton3,mImageButton4,mImageButton5,mImageButton6,mImageButton7;
+    TextView TextView1, TextView2, TextView3, TextView4, TextView5, TextView6, TextView7;
+    ImageButton ImageButton1, ImageButton2, ImageButton3, ImageButton4, ImageButton5, ImageButton6, ImageButton7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,31 +29,31 @@ public class HistoryActivity extends AppCompatActivity {
 
         StateStore stateStore = new StateStore(this);
 
-        mTextView1 = findViewById(R.id.comment1);
-        mTextView2 = findViewById(R.id.comment2);
-        mTextView3 = findViewById(R.id.comment3);
-        mTextView4 = findViewById(R.id.comment4);
-        mTextView5 = findViewById(R.id.comment5);
-        mTextView6 = findViewById(R.id.comment6);
-        mTextView7 = findViewById(R.id.comment7);
+        TextView1 = findViewById(R.id.comment1);
+        TextView2 = findViewById(R.id.comment2);
+        TextView3 = findViewById(R.id.comment3);
+        TextView4 = findViewById(R.id.comment4);
+        TextView5 = findViewById(R.id.comment5);
+        TextView6 = findViewById(R.id.comment6);
+        TextView7 = findViewById(R.id.comment7);
 
-        mImageButton1 = findViewById(R.id.btn1);
-        mImageButton2 = findViewById(R.id.btn2);
-        mImageButton3 = findViewById(R.id.btn3);
-        mImageButton4 = findViewById(R.id.btn4);
-        mImageButton5 = findViewById(R.id.btn5);
-        mImageButton6 = findViewById(R.id.btn6);
-        mImageButton7 = findViewById(R.id.btn7);
+        ImageButton1 = findViewById(R.id.btn1);
+        ImageButton2 = findViewById(R.id.btn2);
+        ImageButton3 = findViewById(R.id.btn3);
+        ImageButton4 = findViewById(R.id.btn4);
+        ImageButton5 = findViewById(R.id.btn5);
+        ImageButton6 = findViewById(R.id.btn6);
+        ImageButton7 = findViewById(R.id.btn7);
 
         ArrayList<TextView> allTextView = new ArrayList<>();
 
-        allTextView.add(mTextView1);
-        allTextView.add(mTextView2);
-        allTextView.add(mTextView3);
-        allTextView.add(mTextView4);
-        allTextView.add(mTextView5);
-        allTextView.add(mTextView6);
-        allTextView.add(mTextView7);
+        allTextView.add(TextView1);
+        allTextView.add(TextView2);
+        allTextView.add(TextView3);
+        allTextView.add(TextView4);
+        allTextView.add(TextView5);
+        allTextView.add(TextView6);
+        allTextView.add(TextView7);
 
         int today = 1;
         int dbSize = stateStore.getQuery().findAll().size() - today;

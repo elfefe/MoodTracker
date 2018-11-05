@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
 
             autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
-                    autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getmNumber()));
+                    autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getNumber()));
 
             new AlertDialog.Builder(this).setTitle(R.string.commentaire_title_bld)
                     .setView(etComment)
