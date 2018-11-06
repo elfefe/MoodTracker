@@ -28,17 +28,30 @@ class AutoCompleteManager {
     }
 
     private Cursor cursor(){
-        return context.getContentResolver().query(
-            ContactsContract
-                    .CommonDataKinds
-                    .Phone
-                    .CONTENT_URI,
-            null,
-            null,
-            null,
-            null,
-            null
-        );
+        if(context.getContentResolver().query(
+                ContactsContract
+                        .CommonDataKinds
+                        .Phone
+                        .CONTENT_URI,
+                null,
+                null,
+                null,
+                null,
+                null
+        ) != null)
+            return context.getContentResolver().query(
+                ContactsContract
+                        .CommonDataKinds
+                        .Phone
+                        .CONTENT_URI,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+        else
+            return null;
     }
 
     private ArrayList<Contacts> arrayList(Cursor cursor) {

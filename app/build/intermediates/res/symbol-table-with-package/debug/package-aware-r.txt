@@ -1018,13 +1018,10 @@ drawable design_snackbar_background
 drawable good
 drawable happy
 drawable history
-drawable ic_comment_black_48px
-drawable ic_history_black
 drawable ic_launcher_background
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
-drawable ic_note_add_black
 drawable ico_comment
 drawable moodtracker_launcher
 drawable mtrl_snackbar_background
@@ -1043,11 +1040,6 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable sad
-drawable smiley_disappointed
-drawable smiley_happy
-drawable smiley_normal
-drawable smiley_sad
-drawable smiley_super_happy
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
 id ALT

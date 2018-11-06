@@ -104,19 +104,21 @@ public class MainActivity extends AppCompatActivity {
         mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
         // If the last state saved is today show it in a toast
-        if (Objects.requireNonNull(stateStore
-                .getQuery()
-                .findAll()
-                .get(stateStore.getQuery().findAll().size() - 1))
-                .getId() == stateStore.getDate()){
-            Toast.makeText(
-                    this,
-                    Objects.requireNonNull(stateStore.getQuery()
-                            .findAll()
-                            .get(stateStore.getQuery().findAll().size() - 1))
-                            .getComment(),
-                    Toast.LENGTH_LONG)
-                    .show();
+        if(stateStore.getQuery().findAll().size() != 0) {
+            if (Objects.requireNonNull(stateStore
+                    .getQuery()
+                    .findAll()
+                    .get(stateStore.getQuery().findAll().size() - 1))
+                    .getId() == stateStore.getDate()) {
+                Toast.makeText(
+                        this,
+                        Objects.requireNonNull(stateStore.getQuery()
+                                .findAll()
+                                .get(stateStore.getQuery().findAll().size() - 1))
+                                .getComment(),
+                        Toast.LENGTH_LONG)
+                        .show();
+            }
         }
     }
 
