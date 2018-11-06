@@ -10,7 +10,7 @@ public class GestureListener implements GestureDetector.OnGestureListener {
     private int valueX = MOOD_DEFAULT;
     private LoaderMainView loaderMainView;
 
-    public GestureListener(LoaderMainView loaderMainView){
+    GestureListener(LoaderMainView loaderMainView){
         this.loaderMainView = loaderMainView;
     }
 
@@ -52,7 +52,7 @@ public class GestureListener implements GestureDetector.OnGestureListener {
         return false;
     }
 
-    public int getValueX() {
+    int getValueX() {
         return valueX;
     }
 }

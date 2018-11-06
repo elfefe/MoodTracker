@@ -8,12 +8,12 @@ import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
 import android.widget.ImageView;
 
-public class LoaderMainView {
+class LoaderMainView {
+    private Context context;
     private ConstraintLayout mainLayout;
     private ImageView smiley;
-    private Context context;
 
-    public LoaderMainView(Context context, ConstraintLayout mainLayout, ImageView smiley) {
+    LoaderMainView(Context context, ConstraintLayout mainLayout, ImageView smiley) {
         this.context = context;
         this.mainLayout = mainLayout;
         this.smiley = smiley;
@@ -24,5 +24,4 @@ public class LoaderMainView {
         smiley.setImageResource(feeling);
         mainLayout.setBackgroundColor(context.getResources().getColor(color));
     }
-
 }

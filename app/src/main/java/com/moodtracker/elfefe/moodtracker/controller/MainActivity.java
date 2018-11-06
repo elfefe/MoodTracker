@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
             final EditText etComment = new EditText(this);
             final AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
             final AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
-            final MessageManager messageManager = new MessageManager(this, this.comment,autoCompleteTextView,etComment);
+            final MessageManager messageManager = new MessageManager(this,
+                                                                    this.comment,
+                                                                    autoCompleteTextView.getText().toString(),
+                                                                    etComment.getText().toString()
+            );
 
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
 
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                             .setView(autoCompleteTextView)
                             .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
                                 messageManager.sendMessage();
-                                this.comment = messageManager.getState();
+                                this.comment = messageManager.getComment();
 
                                 feeling = Mood.values()[gestureListener.getValueX()].getColor();
                                 stateStore.setCommentRealm(comment,feeling);
