@@ -1,27 +1,27 @@
 #Internal package file, do not edit.
-#Tue Nov 06 10:59:52 CET 2018
+#Wed Nov 07 17:44:00 CET 2018
 2.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 5.set=NATIVE_RESOURCE
-0.path=lib/arm64-v8a/librealm-jni.so
+0.path=classes.dex
 2.baseType=DIRECTORY
-3.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+3.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 2.set=NATIVE_RESOURCE
-1.path=lib/armeabi-v7a/librealm-jni.so
+1.path=lib/arm64-v8a/librealm-jni.so
 4.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 count=6
 5.baseType=DIRECTORY
-2.path=lib/mips/librealm-jni.so
+2.path=lib/armeabi-v7a/librealm-jni.so
 5.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 4.set=NATIVE_RESOURCE
-3.path=classes.dex
+3.path=lib/mips/librealm-jni.so
 3.baseType=DIRECTORY
 1.set=NATIVE_RESOURCE
 4.path=lib/x86_64/librealm-jni.so
 1.baseType=DIRECTORY
 5.path=lib/x86/librealm-jni.so
-0.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
+0.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 0.baseType=DIRECTORY
-3.set=DEX
+3.set=NATIVE_RESOURCE
 1.base=C\:\\Users\\Ben\\StudioProjects\\MoodTracker\\app\\build\\intermediates\\transforms\\mergeJniLibs\\debug\\0
 4.baseType=DIRECTORY
-0.set=NATIVE_RESOURCE
+0.set=DEX
