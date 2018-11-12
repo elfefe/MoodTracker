@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                         feeling = Mood.values()[gestureListener.getValueX()].getColor();
                         stateStore.setCommentRealm(comment,feeling);
-                        stateStore.realmTransationCopyOrUpdate();
+                        stateStore.realmTransactionCopyOrUpdate();
                     })
                     // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 feeling = Mood.values()[gestureListener.getValueX()].getColor();
                                 stateStore.setCommentRealm(comment,feeling);
-                                stateStore.realmTransationCopyOrUpdate();
+                                stateStore.realmTransactionCopyOrUpdate();
                             }))
                             .setCancelable(true)
                             .create()

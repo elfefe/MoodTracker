@@ -1,5 +1,6 @@
 package com.moodtracker.elfefe.moodtracker.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
@@ -7,6 +8,7 @@ import android.provider.ContactsContract;
 import com.moodtracker.elfefe.moodtracker.model.Contacts;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 class AutoCompleteManager {
     private Context context;
@@ -18,6 +20,7 @@ class AutoCompleteManager {
     AutoCompleteAdapter autoCompleteAdapter(){
         Cursor cursor = cursor();
 
+        assert cursor != null;
         ArrayList<Contacts> contactsList = arrayList(cursor);
 
         AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(context, contactsList);
@@ -27,6 +30,7 @@ class AutoCompleteManager {
         return autoCompleteAdapter;
     }
 
+    @SuppressLint("Recycle")
     private Cursor cursor(){
         if(context.getContentResolver().query(
                 ContactsContract
@@ -74,6 +78,6 @@ class AutoCompleteManager {
     }
 
     Contacts getContacts(int position){
-        return arrayList(cursor()).get(position);
+        return arrayList(Objects.requireNonNull(cursor())).get(position);
     }
 }

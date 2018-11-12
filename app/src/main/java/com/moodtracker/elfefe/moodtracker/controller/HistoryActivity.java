@@ -18,7 +18,7 @@ import static java.lang.System.out;
 public class HistoryActivity extends AppCompatActivity {
     TextView TextView1, TextView2, TextView3, TextView4, TextView5, TextView6, TextView7;
     ImageButton ImageButton1, ImageButton2, ImageButton3, ImageButton4, ImageButton5, ImageButton6, ImageButton7;
-
+    final private static int TODAY = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,24 +55,22 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(TextView6);
         allTextView.add(TextView7);
 
-        int today = 1;
-        int dbSize = stateStore.getQuery().findAll().size() - today;
-        if (dbSize != 0) {
+        int dbSize = stateStore.getQuery().findAll().size() - TODAY;
+        if (dbSize + TODAY != 0) {
             int allTVPosition = dbSize - allTextView.size();
-            int dbIdPosition = (stateStore.getDate() - today) - allTextView.size();
+            int dbIdPosition = stateStore.getDate() - allTextView.size();
             int x = 0;
-            Log.d("TODAY IS: ", String.valueOf(stateStore.getDate()));
 
-            while(dbIdPosition <= stateStore.getDate() - today) {
-                    if(allTVPosition >= 0){
-                        if(dbIdPosition == Objects.requireNonNull(stateStore.getQuery().findAll().get(allTVPosition)).getId()) {
-                            new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition + x), allTVPosition);
-                        }
-                    }else
-                        x++;
+            while(dbIdPosition <= stateStore.getDate() - TODAY) {
+                if(allTVPosition >= 0){
+                    if(dbIdPosition == Objects.requireNonNull(stateStore.getQuery().findAll().get(allTVPosition)).getId()) {
+                        new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition + x), allTVPosition);
+                    }
+                }else
+                    x++;
 
-                    allTVPosition++;
-                    dbIdPosition++;
+                allTVPosition++;
+                dbIdPosition++;
             }
         }
     }

@@ -20,25 +20,16 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
 
     private Context mContext;
     private List<Contacts> contactsList;
-    private ArrayList<Contacts> items;
-    private ArrayList<Contacts> contactsAll;
-    private View listItem;
 
     AutoCompleteAdapter(@NonNull Context context, ArrayList<Contacts> list) {
         super(context, 0 , list);
         mContext = context;
         contactsList = list;
-        contactsAll =  list;
-        items = new ArrayList<>();
     }
 
     @Override
     public int getCount() {
         return contactsList.size();
-    }
-
-    public View getView(){
-        return listItem;
     }
 
     @NonNull
@@ -54,6 +45,8 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
         }
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Contacts> items = new ArrayList<>();
+            ArrayList<Contacts> contactsAll = (ArrayList<Contacts>) contactsList;
             if(constraint != null) {
                 items.clear();
                 for (Contacts contacts : contactsAll) {
@@ -86,7 +79,7 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        listItem = convertView;
+        View listItem = convertView;
         if(listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.auto_complete,parent,false);
 
