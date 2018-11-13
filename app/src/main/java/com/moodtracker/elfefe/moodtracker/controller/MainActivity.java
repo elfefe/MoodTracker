@@ -1,8 +1,12 @@
 package com.moodtracker.elfefe.moodtracker.controller;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -40,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
         ImageView mImage = findViewById(R.id.imageView);
         ImageButton mImageHistory = findViewById(R.id.imageHistory);
         ImageButton mImageComment = findViewById(R.id.imageComment);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions( new String[]{Manifest.permission.SEND_SMS,Manifest.permission.READ_CONTACTS},1);
+            }
+        }
 
         LoaderMainView mainView = new LoaderMainView(this, mConstraintLayout, mImage);
 

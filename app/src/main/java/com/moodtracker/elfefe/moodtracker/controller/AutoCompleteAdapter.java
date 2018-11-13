@@ -3,6 +3,7 @@ package com.moodtracker.elfefe.moodtracker.controller;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.model.Contacts;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
@@ -65,7 +68,7 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
         }
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            ArrayList<Contacts> filteredList = (ArrayList<Contacts>) results.values;
+            ArrayList<Contacts> filteredList =(ArrayList<Contacts>) results.values;
             if(results.count > 0) {
                 clear();
                 for (Contacts c : filteredList) {
