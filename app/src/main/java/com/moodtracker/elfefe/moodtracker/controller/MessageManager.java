@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
 
-public class MessageManager {
+class MessageManager {
     private Context context;
     private String comment, number, editText;
 

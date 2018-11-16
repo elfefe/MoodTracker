@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
+class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
 
     private Context mContext;
     private List<Contacts> contactsList;
@@ -66,6 +66,7 @@ public class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
                 return new FilterResults();
             }
         }
+        @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             ArrayList<Contacts> filteredList =(ArrayList<Contacts>) results.values;

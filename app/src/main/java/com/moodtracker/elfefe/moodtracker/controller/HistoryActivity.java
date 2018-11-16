@@ -16,8 +16,6 @@ import java.util.Objects;
 import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
-    TextView TextView1, TextView2, TextView3, TextView4, TextView5, TextView6, TextView7;
-    ImageButton ImageButton1, ImageButton2, ImageButton3, ImageButton4, ImageButton5, ImageButton6, ImageButton7;
     final private static int TODAY = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -29,21 +27,13 @@ public class HistoryActivity extends AppCompatActivity {
 
         StateStore stateStore = new StateStore(this);
 
-        TextView1 = findViewById(R.id.comment1);
-        TextView2 = findViewById(R.id.comment2);
-        TextView3 = findViewById(R.id.comment3);
-        TextView4 = findViewById(R.id.comment4);
-        TextView5 = findViewById(R.id.comment5);
-        TextView6 = findViewById(R.id.comment6);
-        TextView7 = findViewById(R.id.comment7);
-
-        ImageButton1 = findViewById(R.id.btn1);
-        ImageButton2 = findViewById(R.id.btn2);
-        ImageButton3 = findViewById(R.id.btn3);
-        ImageButton4 = findViewById(R.id.btn4);
-        ImageButton5 = findViewById(R.id.btn5);
-        ImageButton6 = findViewById(R.id.btn6);
-        ImageButton7 = findViewById(R.id.btn7);
+        TextView TextView1 = findViewById(R.id.comment1);
+        TextView TextView2 = findViewById(R.id.comment2);
+        TextView TextView3 = findViewById(R.id.comment3);
+        TextView TextView4 = findViewById(R.id.comment4);
+        TextView TextView5 = findViewById(R.id.comment5);
+        TextView TextView6 = findViewById(R.id.comment6);
+        TextView TextView7 = findViewById(R.id.comment7);
 
         ArrayList<TextView> allTextView = new ArrayList<>();
 

@@ -5,7 +5,7 @@ import android.view.MotionEvent;
 
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
-public class GestureListener implements GestureDetector.OnGestureListener {
+class GestureListener implements GestureDetector.OnGestureListener {
     final private static int MOOD_DEFAULT = 1;
     private int valueX = MOOD_DEFAULT;
     private LoaderMainView loaderMainView;
