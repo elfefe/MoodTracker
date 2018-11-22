@@ -2,13 +2,13 @@ package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
+import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
 import com.moodtracker.elfefe.moodtracker.dao.HistoryOnClickListener;
 import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -52,12 +52,14 @@ public class HistoryActivity extends AppCompatActivity {
             int x = 0;
 
             while(dbIdPosition <= stateStore.getDate() - TODAY) {
-                if(allTVPosition >= 0){
-                    if(dbIdPosition == Objects.requireNonNull(stateStore.getQuery().findAll().get(allTVPosition)).getId()) {
+                CommentRealm commentRealmGet = stateStore.getQuery().findAll().get(allTVPosition);
+                if(allTVPosition > 0  && commentRealmGet != null){
+                    if(dbIdPosition == commentRealmGet.getId()) {
                         new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition + x), allTVPosition);
                     }
-                }else
+                }else {
                     x++;
+                }
 
                 allTVPosition++;
                 dbIdPosition++;

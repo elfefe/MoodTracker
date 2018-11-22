@@ -1,5 +1,7 @@
 package com.moodtracker.elfefe.moodtracker.dao;
 
+import com.moodtracker.elfefe.moodtracker.model.Mood;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,8 +9,7 @@ public class CommentRealm extends RealmObject {
     @PrimaryKey
     private int id;
 
-    private String comment;
-    private int feeling;
+    private String comment, feeling;
 
 
     public int getId() {
@@ -27,11 +28,11 @@ public class CommentRealm extends RealmObject {
         this.comment = comment;
     }
 
-    public int getFeeling() {
-        return feeling;
+    public Mood getFeeling() {
+        return Mood.valueOf(feeling);
     }
 
-    void setFeeling(int feeling) {
-        this.feeling = feeling;
+    void setFeeling(Mood feeling) {
+        this.feeling = feeling.name();
     }
 }

@@ -18,17 +18,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
+import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
 import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
-import java.util.Objects;
+import io.realm.RealmResults;
 
 import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
 
     private String comment = "";
-    private int feeling = 0;
+    private Mood feeling;
 
     private GestureDetector gestureDetector;
 
@@ -47,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                        != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions( new String[]{Manifest.permission.SEND_SMS,Manifest.permission.READ_CONTACTS},1);
+                requestPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_CONTACTS}, 1);
             }
         }
 
@@ -58,15 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         GestureListener gestureListener = new GestureListener(mainView);
 
-        gestureDetector = new GestureDetector(this,gestureListener);
+        gestureDetector = new GestureDetector(this, gestureListener);
 
         StateStore stateStore = new StateStore(this);
-        LastMood lastMood = new LastMood(stateStore);
-
-        if (stateStore.getQuery().findAll().isEmpty())
-            mainView.setFeeling(Mood.GOOD.getColor(),Mood.GOOD.getFeeling());
-        else
-            mainView.setFeeling(lastMood.getMoodColor(),lastMood.getMoodFeeling());
 
         // Save your state or share it with the world
         mImageComment.setOnClickListener(v -> {
@@ -75,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
             final AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
             final AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
             final MessageManager messageManager = new MessageManager(this,
-                                                                    this.comment,
-                                                                    autoCompleteTextView.getText().toString(),
-                                                                    etComment.getText().toString()
+                    this.comment,
+                    autoCompleteTextView.getText().toString(),
+                    etComment.getText().toString()
             );
 
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
@@ -85,33 +80,36 @@ public class MainActivity extends AppCompatActivity {
             autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
                     autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getNumber()));
 
-            new AlertDialog.Builder(this).setTitle(R.string.commentaire_title_bld)
+            new AlertDialog
+                    .Builder(this)
+                    .setTitle(R.string.commentaire_title_bld)
                     .setView(etComment)
-                    .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {})
+                    .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {
+                    })
                     // Save it
-                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) ->{
+                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) -> {
                         this.comment = etComment.getText().toString();
 
-                        feeling = Mood.values()[gestureListener.getValueX()].getColor();
-                        stateStore.setCommentRealm(comment,feeling);
+                        feeling = Mood.values()[gestureListener.getValueX()];
+                        stateStore.setCommentRealm(comment, feeling);
                         stateStore.realmTransactionCopyOrUpdate();
                     })
                     // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
-                        new AlertDialog.Builder(this)
-                            .setTitle(R.string.message_title_bld)
-                            .setView(autoCompleteTextView)
-                            .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
-                                messageManager.sendMessage();
-                                this.comment = messageManager.getComment();
+                            new AlertDialog.Builder(this)
+                                    .setTitle(R.string.message_title_bld)
+                                    .setView(autoCompleteTextView)
+                                    .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
+                                        messageManager.sendMessage();
+                                        this.comment = messageManager.getComment();
 
-                                feeling = Mood.values()[gestureListener.getValueX()].getColor();
-                                stateStore.setCommentRealm(comment,feeling);
-                                stateStore.realmTransactionCopyOrUpdate();
-                            }))
-                            .setCancelable(true)
-                            .create()
-                            .show())
+                                        feeling = Mood.values()[gestureListener.getValueX()];
+                                        stateStore.setCommentRealm(comment, feeling);
+                                        stateStore.realmTransactionCopyOrUpdate();
+                                    }))
+                                    .setCancelable(true)
+                                    .create()
+                                    .show())
                     .setCancelable(true)
                     .create()
                     .show();
@@ -120,30 +118,33 @@ public class MainActivity extends AppCompatActivity {
         // HistoryActivity intent
         mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
+        RealmResults<CommentRealm> realmResults = stateStore.getQuery().findAll();
         // If the last state saved is today show it in a toast
-        if(stateStore.getQuery().findAll().size() != 0) {
-            if (Objects.requireNonNull(stateStore
-                    .getQuery()
-                    .findAll()
-                    .get(stateStore.getQuery().findAll().size() - 1))
-                    .getId() == stateStore.getDate()) {
+        if (realmResults.size() != 0) {
+            CommentRealm lastComment = realmResults.get(realmResults.size() - 1);
+            if (lastComment != null && lastComment.getId() == stateStore.getDate()) {
                 Toast.makeText(
                         this,
-                        Objects.requireNonNull(stateStore.getQuery()
-                                .findAll()
-                                .get(stateStore.getQuery().findAll().size() - 1))
-                                .getComment(),
+                        lastComment.getComment(),
                         Toast.LENGTH_LONG)
                         .show();
+
+                mainView.setFeeling(lastComment.getFeeling().getColor(), lastComment.getFeeling().getFeeling());
             }
+
+
+        } else {
+            mainView.setFeeling(Mood.GOOD.getColor(), Mood.GOOD.getFeeling());
         }
+
+
     }
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event) ;
+        return super.onTouchEvent(event);
     }
 
     @Override

@@ -30,9 +30,8 @@ class AutoCompleteManager {
         return autoCompleteAdapter;
     }
 
-    @SuppressLint("Recycle")
     private Cursor cursor(){
-        if(context.getContentResolver().query(
+        Cursor query = context.getContentResolver().query(
                 ContactsContract
                         .CommonDataKinds
                         .Phone
@@ -42,20 +41,10 @@ class AutoCompleteManager {
                 null,
                 null,
                 null
-        ) != null)
-            return context.getContentResolver().query(
-                ContactsContract
-                        .CommonDataKinds
-                        .Phone
-                        .CONTENT_URI,
-                null,
-                null,
-                null,
-                null,
-                null
-            );
-        else
-            return null;
+        );
+        if(query != null)
+            return query;
+        else return null;
     }
 
     private ArrayList<Contacts> arrayList(Cursor cursor) {
@@ -78,6 +67,9 @@ class AutoCompleteManager {
     }
 
     Contacts getContacts(int position){
-        return arrayList(Objects.requireNonNull(cursor())).get(position);
+        Cursor cursor = cursor();
+        if (cursor != null)
+            return arrayList(cursor).get(position);
+        else return null;
     }
 }
