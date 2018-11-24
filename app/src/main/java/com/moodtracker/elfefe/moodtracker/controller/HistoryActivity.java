@@ -64,5 +64,6 @@ public class HistoryActivity extends AppCompatActivity {
                 dbIdPosition++;
             }
         }
+
     }
 }
