@@ -9,7 +9,7 @@ import static org.junit.Assert.fail;
 
 public class LastMoodTest {
 
-    private long feeling = 0x7f050046;
+    private final long feeling = 0x7f050046;
 
     @Test
     public void getMoodFeeling_return_an_integer() {

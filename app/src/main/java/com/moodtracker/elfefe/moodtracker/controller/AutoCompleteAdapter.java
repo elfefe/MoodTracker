@@ -3,7 +3,6 @@ package com.moodtracker.elfefe.moodtracker.controller;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.util.ArraySet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +14,22 @@ import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.model.Contacts;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
 
-    private Context mContext;
-    private List<Contacts> contactsList;
+    private final Context context;
+    private final List<Contacts> list;
 
     AutoCompleteAdapter(@NonNull Context context, ArrayList<Contacts> list) {
         super(context, 0 , list);
-        mContext = context;
-        contactsList = list;
+        this.context = context;
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return contactsList.size();
+        return list.size();
     }
 
     @NonNull
@@ -41,7 +38,7 @@ class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
         return nameFilter;
     }
 
-    private Filter nameFilter = new Filter() {
+    private final Filter nameFilter = new Filter() {
         @Override
         public String convertResultToString(Object resultValue) {
             return ((Contacts)(resultValue)).getName();
@@ -49,7 +46,7 @@ class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Contacts> items = new ArrayList<>();
-            ArrayList<Contacts> contactsAll = (ArrayList<Contacts>) contactsList;
+            ArrayList<Contacts> contactsAll = (ArrayList<Contacts>) list;
             if(constraint != null) {
                 items.clear();
                 for (Contacts contacts : contactsAll) {
@@ -85,9 +82,9 @@ class AutoCompleteAdapter  extends ArrayAdapter<Contacts> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if(listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.auto_complete,parent,false);
+            listItem = LayoutInflater.from(context).inflate(R.layout.auto_complete,parent,false);
 
-        Contacts contacts = contactsList.get(position);
+        Contacts contacts = list.get(position);
 
         TextView name = listItem.findViewById(R.id.name);
         name.setText(contacts.getName());

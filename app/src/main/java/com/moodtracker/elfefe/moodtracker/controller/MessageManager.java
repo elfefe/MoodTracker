@@ -10,8 +10,10 @@ import android.widget.Toast;
 import com.moodtracker.elfefe.moodtracker.R;
 
 class MessageManager {
-    private Context context;
-    private String comment, number, editText;
+    private final Context context;
+    private String comment;
+    private final String number;
+    private final String editText;
 
     MessageManager(Context context, String comment, String number, String editText) {
         this.context = context;

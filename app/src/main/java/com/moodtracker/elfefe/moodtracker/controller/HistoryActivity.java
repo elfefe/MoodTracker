@@ -8,10 +8,8 @@ import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
 import com.moodtracker.elfefe.moodtracker.dao.HistoryOnClickListener;
 import com.moodtracker.elfefe.moodtracker.dao.StateStore;
-import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static java.lang.System.out;
 
@@ -44,6 +42,7 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(TextView5);
         allTextView.add(TextView6);
         allTextView.add(TextView7);
+
 
         int dbSize = stateStore.getQuery().findAll().size() - TODAY;
         if (dbSize + TODAY != 0) {

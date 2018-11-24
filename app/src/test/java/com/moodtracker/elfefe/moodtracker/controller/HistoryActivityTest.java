@@ -11,8 +11,8 @@ import static org.junit.Assert.assertEquals;
 
 public class HistoryActivityTest {
     
-    private ArrayList<String> arrayList = new ArrayList<>();
-    private ArrayList<TextView> allTextView = new ArrayList<>();
+    private final ArrayList<String> arrayList = new ArrayList<>();
+    private final ArrayList<TextView> allTextView = new ArrayList<>();
 
     @Before
     public void init(){

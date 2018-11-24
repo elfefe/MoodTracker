@@ -12,7 +12,7 @@ import static org.mockito.Mockito.spy;
 
 public class LoaderMainViewTest {
 
-    private MainActivity mainActivity = spy(MainActivity.class);
+    private final MainActivity mainActivity = spy(MainActivity.class);
 
     @Test
     public void setFeeling_background_can_be_set() {

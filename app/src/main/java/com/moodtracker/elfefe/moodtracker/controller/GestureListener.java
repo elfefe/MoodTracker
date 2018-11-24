@@ -8,7 +8,7 @@ import com.moodtracker.elfefe.moodtracker.model.Mood;
 class GestureListener implements GestureDetector.OnGestureListener {
     final private static int MOOD_DEFAULT = 1;
     private int valueX = MOOD_DEFAULT;
-    private LoaderMainView loaderMainView;
+    private final LoaderMainView loaderMainView;
 
     GestureListener(LoaderMainView loaderMainView){
         this.loaderMainView = loaderMainView;

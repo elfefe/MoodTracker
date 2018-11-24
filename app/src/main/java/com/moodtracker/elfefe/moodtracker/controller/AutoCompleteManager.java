@@ -1,6 +1,5 @@
 package com.moodtracker.elfefe.moodtracker.controller;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
@@ -8,10 +7,9 @@ import android.provider.ContactsContract;
 import com.moodtracker.elfefe.moodtracker.model.Contacts;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 class AutoCompleteManager {
-    private Context context;
+    private final Context context;
 
     AutoCompleteManager(Context context) {
         this.context = context;

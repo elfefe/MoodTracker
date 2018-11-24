@@ -13,13 +13,13 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.fail;
 
 public class AutoCompleteAdapterTest {
-    private ArrayList<Contacts> original = new ArrayList<>();
-    private ArrayList<Contacts> copyAll = new ArrayList<>();
-    private ArrayList<Contacts> copy = new ArrayList<>();
+    private final ArrayList<Contacts> original = new ArrayList<>();
+    private final ArrayList<Contacts> copyAll = new ArrayList<>();
+    private final ArrayList<Contacts> copy = new ArrayList<>();
     Contacts contacts;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         try {
             original.add(new Contacts("Name1", "0001"));
             original.add(new Contacts("Name2", "0010"));

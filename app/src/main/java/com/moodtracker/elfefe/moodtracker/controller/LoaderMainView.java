@@ -9,9 +9,9 @@ import android.support.constraint.ConstraintLayout;
 import android.widget.ImageView;
 
 class LoaderMainView {
-    private Context context;
-    private ConstraintLayout mainLayout;
-    private ImageView smiley;
+    private final Context context;
+    private final ConstraintLayout mainLayout;
+    private final ImageView smiley;
 
     LoaderMainView(Context context, ConstraintLayout mainLayout, ImageView smiley) {
         this.context = context;

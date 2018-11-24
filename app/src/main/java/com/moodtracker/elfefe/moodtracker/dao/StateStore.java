@@ -11,8 +11,8 @@ import io.realm.RealmQuery;
 
 public class StateStore {
 
-    private Context context;
-    private Realm realm;
+    private final Context context;
+    private final Realm realm;
     private CommentRealm commentRealm;
 
     private String comment;

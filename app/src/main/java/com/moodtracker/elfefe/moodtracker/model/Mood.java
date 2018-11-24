@@ -22,9 +22,10 @@ public enum Mood {
 
     public float getPercecnt(){return percent;}
 
-    int color,feeling;
+    final int color;
+    final int feeling;
 
-    float percent;
+    final float percent;
 
     Mood(@ColorRes int color,@DrawableRes int feeling, float percent) {
         this.color = color;
