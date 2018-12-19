@@ -22,19 +22,19 @@ class MessageManager {
         this.editText = editText;
     }
 
-    void sendMessage(){
+    void sendMessage() {
 
-        SmsManager smsManager =  SmsManager.getDefault();
+        SmsManager smsManager = SmsManager.getDefault();
 
 
-        if(!number.equals("")){
+        if (!number.equals("")) {
             smsManager.sendTextMessage(number,
                     null,
                     editText,
                     null,
                     setPendingIntent());
             comment = editText;
-        }else
+        } else
             Toast.makeText(
                     context,
                     R.string.messagemanager_erreur_toast,
@@ -49,8 +49,8 @@ class MessageManager {
         return PendingIntent.getBroadcast(
                 context,
                 0,
-               new Intent(Intent.ACTION_VIEW).setDataAndType(RingtoneManager
-                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),"audio/*"),
+                new Intent(Intent.ACTION_VIEW).setDataAndType(RingtoneManager
+                        .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), "audio/*"),
                 0
         );
     }

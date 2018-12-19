@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.moodtracker.elfefe.moodtracker.model.Mood;
 
-import java.util.Calendar;
+import org.threeten.bp.LocalDate;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -22,21 +22,39 @@ public class StateStore {
         this.realm = RealmInst();
     }
 
-    public void realmTransactionCopyOrUpdate(){
+
+    public void realmTransactionCopyOrUpdate() {
         if (!comment.equals(""))
             realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(commentRealm));
     }
 
     public RealmQuery<CommentRealm> getQuery() {
-        return realm.where(CommentRealm.class);
+        return realm.where(CommentRealm.class).between(CommentRealm.KEY_ID, getDate(7), getDate(1));
     }
 
-    public Integer getDate(){
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.YEAR)+calendar.get(Calendar.DAY_OF_YEAR);
+    public Integer getDate() {
+        LocalDate now = LocalDate.now();
+        return now.getYear() * 1_000 + now.getDayOfYear();
     }
 
-    public void setCommentRealm(String comment,Mood feeling) {
+    public Integer getDate(int minusDays) {
+        LocalDate now = LocalDate.now();
+        int someDaysAgo;
+
+        if (now.getDayOfYear() - minusDays < 0) {
+            int dayInYear = 365;
+            if (now.isLeapYear()) {
+                dayInYear = 366;
+            }
+            someDaysAgo = (now.getYear() - 1) * 1_000 + (dayInYear - minusDays + now.getDayOfYear());
+        } else {
+            someDaysAgo = getDate() - minusDays;
+        }
+
+        return someDaysAgo;
+    }
+
+    public void setCommentRealm(String comment, Mood feeling) {
         this.comment = comment;
         commentRealm = new CommentRealm();
         commentRealm.setId(getDate());

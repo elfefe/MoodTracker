@@ -1,6 +1,7 @@
 package com.moodtracker.elfefe.moodtracker.dao;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,27 +10,26 @@ import com.moodtracker.elfefe.moodtracker.model.Mood;
 
 public class HistoryOnClickListener {
 
-    public HistoryOnClickListener(Context context, StateStore stateStore, TextView textView, int position) {
+    public HistoryOnClickListener(Context context, @Nullable CommentRealm commentRealm, TextView textView) {
 
-        CommentRealm dbGet = stateStore.getQuery().findAll().get(position);
-
-        if (dbGet == null) {
+        if (commentRealm == null) {
             return;
         }
-        Mood feeling = dbGet.getFeeling();
+        Mood feeling = commentRealm.getFeeling();
 
         textView.setBackgroundColor(context.getResources().getColor(feeling.getColor()));
 
         textView.setOnClickListener(v -> Toast.makeText(
                 context,
-                dbGet.getComment(),
+                commentRealm.getComment(),
                 Toast.LENGTH_LONG)
                 .show()
         );
 
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
-        textView.setLayoutParams(layoutParams);
 
         layoutParams.matchConstraintPercentWidth = feeling.getPercecnt();
+
+        textView.setLayoutParams(layoutParams);
     }
 }

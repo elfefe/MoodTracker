@@ -20,7 +20,7 @@ class LoaderMainView {
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    void setFeeling(@ColorRes int color, @DrawableRes int feeling){
+    void setFeeling(@ColorRes int color, @DrawableRes int feeling) {
         smiley.setImageResource(feeling);
         mainLayout.setBackgroundColor(context.getResources().getColor(color));
     }

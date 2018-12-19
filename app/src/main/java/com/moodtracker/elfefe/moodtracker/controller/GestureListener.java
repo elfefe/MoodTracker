@@ -10,7 +10,7 @@ class GestureListener implements GestureDetector.OnGestureListener {
     private int valueX = MOOD_DEFAULT;
     private final LoaderMainView loaderMainView;
 
-    GestureListener(LoaderMainView loaderMainView){
+    GestureListener(LoaderMainView loaderMainView) {
         this.loaderMainView = loaderMainView;
     }
 
@@ -41,14 +41,14 @@ class GestureListener implements GestureDetector.OnGestureListener {
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (velocityY < 0 && valueX < Mood.values().length-1){
-                valueX++;
-                loaderMainView.setFeeling(Mood.values()[valueX].getColor(),Mood.values()[valueX].getFeeling());
-            }
-            if (velocityY > 0 && valueX > 0){
-                valueX--;
-                loaderMainView.setFeeling(Mood.values()[valueX].getColor(),Mood.values()[valueX].getFeeling());
-            }
+        if (velocityY < 0 && valueX < Mood.values().length - 1) {
+            valueX++;
+            loaderMainView.setFeeling(Mood.values()[valueX].getColor(), Mood.values()[valueX].getFeeling());
+        }
+        if (velocityY > 0 && valueX > 0) {
+            valueX--;
+            loaderMainView.setFeeling(Mood.values()[valueX].getColor(), Mood.values()[valueX].getFeeling());
+        }
         return false;
     }
 

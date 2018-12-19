@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class HistoryActivityTest {
-    
+
     private final ArrayList<String> arrayList = new ArrayList<>();
     private final ArrayList<TextView> allTextView = new ArrayList<>();
 
     @Before
-    public void init(){
+    public void init() {
         arrayList.add("0");
         arrayList.add("1");
         arrayList.add("2");
@@ -44,7 +44,7 @@ public class HistoryActivityTest {
             int x = 0;
             if (arrayList.size() >= allTextView.size())
                 x = arrayList.size() - allTextView.size();
-            while(x < arrayList.size()) {
+            while (x < arrayList.size()) {
                 HistoryOnClickListener++;
                 x++;
             }

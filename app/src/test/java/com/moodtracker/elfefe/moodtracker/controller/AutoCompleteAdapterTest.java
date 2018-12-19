@@ -16,7 +16,6 @@ public class AutoCompleteAdapterTest {
     private final ArrayList<Contacts> original = new ArrayList<>();
     private final ArrayList<Contacts> copyAll = new ArrayList<>();
     private final ArrayList<Contacts> copy = new ArrayList<>();
-    Contacts contacts;
 
     @Before
     public void setUp() {
@@ -27,25 +26,24 @@ public class AutoCompleteAdapterTest {
             original.add(new Contacts("Name4", "0110"));
 
             copyAll.addAll(original);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("Error ", e.getMessage());
             fail();
         }
     }
 
 
-
     @Test
-    public void performFilter_return_a_correct_filterResult(){
+    public void performFilter_return_a_correct_filterResult() {
         String constraint = "me";
 
         copy.clear();
         for (Contacts contacts : copyAll) {
-            if(contacts.getName().toLowerCase().contains(constraint.toLowerCase())
-                    || contacts.getNumber().toLowerCase().contains(constraint.toLowerCase())){
+            if (contacts.getName().toLowerCase().contains(constraint.toLowerCase())
+                    || contacts.getNumber().toLowerCase().contains(constraint.toLowerCase())) {
                 copy.add(contacts);
             }
         }
-        assertArrayEquals(original.toArray(),copy.toArray());
+        assertArrayEquals(original.toArray(), copy.toArray());
     }
 }

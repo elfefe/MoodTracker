@@ -11,12 +11,14 @@ import com.moodtracker.elfefe.moodtracker.dao.StateStore;
 
 import java.util.ArrayList;
 
+import io.realm.RealmResults;
+
 import static java.lang.System.out;
 
 public class HistoryActivity extends AppCompatActivity {
-    final private static int TODAY = 1;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_history);
@@ -43,27 +45,20 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(TextView6);
         allTextView.add(TextView7);
 
-
-        int dbSize = stateStore.getQuery().findAll().size() - TODAY;
-        if (dbSize + TODAY != 0) {
-            int allTVPosition = dbSize - allTextView.size();
-            int dbIdPosition = stateStore.getDate() - allTextView.size();
-            int x = 0;
-
-            while(dbIdPosition <= stateStore.getDate() - TODAY) {
-                CommentRealm commentRealmGet = stateStore.getQuery().findAll().get(allTVPosition);
-                if(allTVPosition > 0  && commentRealmGet != null){
-                    if(dbIdPosition == commentRealmGet.getId()) {
-                        new HistoryOnClickListener(this, stateStore, allTextView.get(allTVPosition + x), allTVPosition);
-                    }
-                }else {
-                    x++;
+        RealmResults<CommentRealm> findAll = stateStore.getQuery().findAll();
+        if (findAll.size() != 0) {
+            for (int viewCreated = 0, commentIndex = 0; viewCreated < allTextView.size(); viewCreated++) {
+                CommentRealm commentRealmGet = findAll.get(commentIndex);
+                if (commentIndex < findAll.size()){
+                    commentRealmGet = findAll.get(commentIndex);
                 }
-
-                allTVPosition++;
-                dbIdPosition++;
+                if (commentRealmGet != null && stateStore.getDate(viewCreated + 1) == commentRealmGet.getId()) {
+                    commentIndex++;
+                    new HistoryOnClickListener(this, commentRealmGet, allTextView.get(viewCreated));
+                }else{
+                    new HistoryOnClickListener(this, null, allTextView.get(viewCreated));
+                }
             }
         }
-
     }
 }

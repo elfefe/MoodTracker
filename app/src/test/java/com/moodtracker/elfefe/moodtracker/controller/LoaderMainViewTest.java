@@ -23,6 +23,6 @@ public class LoaderMainViewTest {
 
         constraintLayout.setBackgroundResource(drawableRes);
 
-        Assert.assertEquals(drawable,constraintLayout.getBackground());
+        Assert.assertEquals(drawable, constraintLayout.getBackground());
     }
 }

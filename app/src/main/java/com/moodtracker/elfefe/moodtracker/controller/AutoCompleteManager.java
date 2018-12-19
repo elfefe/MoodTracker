@@ -15,7 +15,7 @@ class AutoCompleteManager {
         this.context = context;
     }
 
-    AutoCompleteAdapter autoCompleteAdapter(){
+    AutoCompleteAdapter autoCompleteAdapter() {
         Cursor cursor = cursor();
 
         assert cursor != null;
@@ -28,7 +28,7 @@ class AutoCompleteManager {
         return autoCompleteAdapter;
     }
 
-    private Cursor cursor(){
+    private Cursor cursor() {
         Cursor query = context.getContentResolver().query(
                 ContactsContract
                         .CommonDataKinds
@@ -40,7 +40,7 @@ class AutoCompleteManager {
                 null,
                 null
         );
-        if(query != null)
+        if (query != null)
             return query;
         else return null;
     }
@@ -48,15 +48,15 @@ class AutoCompleteManager {
     private ArrayList<Contacts> arrayList(Cursor cursor) {
         ArrayList<Contacts> contactList = new ArrayList<>();
         assert cursor != null;
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             Contacts contacts = new Contacts(cursor.getString(cursor.getColumnIndex(ContactsContract
-                        .CommonDataKinds
-                        .Phone
-                        .DISPLAY_NAME_ALTERNATIVE))
-                    ,cursor.getString(cursor.getColumnIndex(ContactsContract
-                        .CommonDataKinds
-                        .Phone
-                        .NUMBER))
+                    .CommonDataKinds
+                    .Phone
+                    .DISPLAY_NAME_ALTERNATIVE))
+                    , cursor.getString(cursor.getColumnIndex(ContactsContract
+                    .CommonDataKinds
+                    .Phone
+                    .NUMBER))
             );
 
             contactList.add(contacts);
@@ -64,7 +64,7 @@ class AutoCompleteManager {
         return contactList;
     }
 
-    Contacts getContacts(int position){
+    Contacts getContacts(int position) {
         Cursor cursor = cursor();
         if (cursor != null)
             return arrayList(cursor).get(position);

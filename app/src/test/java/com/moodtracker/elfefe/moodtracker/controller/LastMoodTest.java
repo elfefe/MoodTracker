@@ -14,15 +14,15 @@ public class LastMoodTest {
     @Test
     public void getMoodFeeling_return_an_integer() {
 
-        if (feeling ==  Mood.HAPPY.getColor())
+        if (feeling == Mood.HAPPY.getColor())
             fail();
-        else if (feeling ==  Mood.GOOD.getColor())
-            assertEquals(Mood.GOOD.getColor(),feeling);
-        else if (feeling ==  Mood.AVERAGE.getColor())
+        else if (feeling == Mood.GOOD.getColor())
+            assertEquals(Mood.GOOD.getColor(), feeling);
+        else if (feeling == Mood.AVERAGE.getColor())
             fail();
-        else if (feeling ==  Mood.SAD.getColor())
+        else if (feeling == Mood.SAD.getColor())
             fail();
-        else if (feeling ==  Mood.ANGRY.getColor())
+        else if (feeling == Mood.ANGRY.getColor())
             fail();
         else
             fail();
@@ -31,15 +31,15 @@ public class LastMoodTest {
     @Test
     public void getMoodColor_return_an_integer() {
 
-        if (feeling ==  Mood.HAPPY.getColor())
+        if (feeling == Mood.HAPPY.getColor())
             fail();
-        else if (feeling ==  Mood.GOOD.getColor())
-            assertEquals(Mood.GOOD.getColor(),feeling);
-        else if (feeling ==  Mood.AVERAGE.getColor())
+        else if (feeling == Mood.GOOD.getColor())
+            assertEquals(Mood.GOOD.getColor(), feeling);
+        else if (feeling == Mood.AVERAGE.getColor())
             fail();
-        else if (feeling ==  Mood.SAD.getColor())
+        else if (feeling == Mood.SAD.getColor())
             fail();
-        else if (feeling ==  Mood.ANGRY.getColor())
+        else if (feeling == Mood.ANGRY.getColor())
             fail();
         else
             fail();

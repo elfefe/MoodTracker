@@ -140,31 +140,39 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
 
     @Override
     @SuppressWarnings("cast")
-    public int realmGet$feeling() {
+    public String realmGet$feeling() {
         proxyState.getRealm$realm().checkIfValid();
-        return (int) proxyState.getRow$realm().getLong(columnInfo.feelingIndex);
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.feelingIndex);
     }
 
     @Override
-    public void realmSet$feeling(int value) {
+    public void realmSet$feeling(String value) {
         if (proxyState.isUnderConstruction()) {
             if (!proxyState.getAcceptDefaultValue$realm()) {
                 return;
             }
             final Row row = proxyState.getRow$realm();
-            row.getTable().setLong(columnInfo.feelingIndex, row.getIndex(), value, true);
+            if (value == null) {
+                row.getTable().setNull(columnInfo.feelingIndex, row.getIndex(), true);
+                return;
+            }
+            row.getTable().setString(columnInfo.feelingIndex, row.getIndex(), value, true);
             return;
         }
 
         proxyState.getRealm$realm().checkIfValid();
-        proxyState.getRow$realm().setLong(columnInfo.feelingIndex, value);
+        if (value == null) {
+            proxyState.getRow$realm().setNull(columnInfo.feelingIndex);
+            return;
+        }
+        proxyState.getRow$realm().setString(columnInfo.feelingIndex, value);
     }
 
     private static OsObjectSchemaInfo createExpectedObjectSchemaInfo() {
         OsObjectSchemaInfo.Builder builder = new OsObjectSchemaInfo.Builder("CommentRealm", 3, 0);
         builder.addPersistedProperty("id", RealmFieldType.INTEGER, Property.PRIMARY_KEY, Property.INDEXED, Property.REQUIRED);
         builder.addPersistedProperty("comment", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
-        builder.addPersistedProperty("feeling", RealmFieldType.INTEGER, !Property.PRIMARY_KEY, !Property.INDEXED, Property.REQUIRED);
+        builder.addPersistedProperty("feeling", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
         return builder.build();
     }
 
@@ -229,9 +237,9 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
         }
         if (json.has("feeling")) {
             if (json.isNull("feeling")) {
-                throw new IllegalArgumentException("Trying to set non-nullable field 'feeling' to null.");
+                objProxy.realmSet$feeling(null);
             } else {
-                objProxy.realmSet$feeling((int) json.getInt("feeling"));
+                objProxy.realmSet$feeling((String) json.getString("feeling"));
             }
         }
         return obj;
@@ -265,10 +273,10 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
                 }
             } else if (name.equals("feeling")) {
                 if (reader.peek() != JsonToken.NULL) {
-                    objProxy.realmSet$feeling((int) reader.nextInt());
+                    objProxy.realmSet$feeling((String) reader.nextString());
                 } else {
                     reader.skipValue();
-                    throw new IllegalArgumentException("Trying to set non-nullable field 'feeling' to null.");
+                    objProxy.realmSet$feeling(null);
                 }
             } else {
                 reader.skipValue();
@@ -361,7 +369,10 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
         if (realmGet$comment != null) {
             Table.nativeSetString(tableNativePtr, columnInfo.commentIndex, rowIndex, realmGet$comment, false);
         }
-        Table.nativeSetLong(tableNativePtr, columnInfo.feelingIndex, rowIndex, ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling(), false);
+        String realmGet$feeling = ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling();
+        if (realmGet$feeling != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.feelingIndex, rowIndex, realmGet$feeling, false);
+        }
         return rowIndex;
     }
 
@@ -395,7 +406,10 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
             if (realmGet$comment != null) {
                 Table.nativeSetString(tableNativePtr, columnInfo.commentIndex, rowIndex, realmGet$comment, false);
             }
-            Table.nativeSetLong(tableNativePtr, columnInfo.feelingIndex, rowIndex, ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling(), false);
+            String realmGet$feeling = ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling();
+            if (realmGet$feeling != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.feelingIndex, rowIndex, realmGet$feeling, false);
+            }
         }
     }
 
@@ -422,7 +436,12 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
         } else {
             Table.nativeSetNull(tableNativePtr, columnInfo.commentIndex, rowIndex, false);
         }
-        Table.nativeSetLong(tableNativePtr, columnInfo.feelingIndex, rowIndex, ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling(), false);
+        String realmGet$feeling = ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling();
+        if (realmGet$feeling != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.feelingIndex, rowIndex, realmGet$feeling, false);
+        } else {
+            Table.nativeSetNull(tableNativePtr, columnInfo.feelingIndex, rowIndex, false);
+        }
         return rowIndex;
     }
 
@@ -456,7 +475,12 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
             } else {
                 Table.nativeSetNull(tableNativePtr, columnInfo.commentIndex, rowIndex, false);
             }
-            Table.nativeSetLong(tableNativePtr, columnInfo.feelingIndex, rowIndex, ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling(), false);
+            String realmGet$feeling = ((com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxyInterface) object).realmGet$feeling();
+            if (realmGet$feeling != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.feelingIndex, rowIndex, realmGet$feeling, false);
+            } else {
+                Table.nativeSetNull(tableNativePtr, columnInfo.feelingIndex, rowIndex, false);
+            }
         }
     }
 
@@ -510,7 +534,7 @@ public class com_moodtracker_elfefe_moodtracker_dao_CommentRealmRealmProxy exten
         stringBuilder.append("}");
         stringBuilder.append(",");
         stringBuilder.append("{feeling:");
-        stringBuilder.append(realmGet$feeling());
+        stringBuilder.append(realmGet$feeling() != null ? realmGet$feeling() : "null");
         stringBuilder.append("}");
         stringBuilder.append("]");
         return stringBuilder.toString();
