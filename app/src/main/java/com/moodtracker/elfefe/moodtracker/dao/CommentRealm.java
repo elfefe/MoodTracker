@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class CommentRealm extends RealmObject {
 
-    static final String KEY_ID = "id";
+    public static final String KEY_ID = "id";
 
     @PrimaryKey
     private int id;

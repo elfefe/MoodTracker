@@ -6,12 +6,14 @@ import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
-import com.moodtracker.elfefe.moodtracker.dao.HistoryOnClickListener;
-import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+import com.moodtracker.elfefe.moodtracker.dao.CommentRealmDAO;
+import com.moodtracker.elfefe.moodtracker.utils.TimeUtils;
 
 import java.util.ArrayList;
 
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 import static java.lang.System.out;
 
@@ -25,7 +27,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         out.println("HistoryActivity::onCreate()");
 
-        StateStore stateStore = new StateStore(this);
+        CommentRealmDAO commentRealmDAO = new CommentRealmDAO(this);
 
         TextView TextView1 = findViewById(R.id.comment1);
         TextView TextView2 = findViewById(R.id.comment2);
@@ -45,18 +47,14 @@ public class HistoryActivity extends AppCompatActivity {
         allTextView.add(TextView6);
         allTextView.add(TextView7);
 
-        RealmResults<CommentRealm> findAll = stateStore.getQuery().findAll();
-        if (findAll.size() != 0) {
-            for (int viewCreated = 0, commentIndex = 0; viewCreated < allTextView.size(); viewCreated++) {
-                CommentRealm commentRealmGet = findAll.get(commentIndex);
-                if (commentIndex < findAll.size()){
-                    commentRealmGet = findAll.get(commentIndex);
-                }
-                if (commentRealmGet != null && stateStore.getDate(viewCreated + 1) == commentRealmGet.getId()) {
-                    commentIndex++;
-                    new HistoryOnClickListener(this, commentRealmGet, allTextView.get(viewCreated));
+        RealmQuery<CommentRealm> commentRealmDAOQuery = commentRealmDAO.getQuery();
+        RealmResults<CommentRealm> realmResults = commentRealmDAOQuery.findAll().sort(CommentRealm.KEY_ID, Sort.DESCENDING);
+        if (commentRealmDAOQuery.count() != 0){
+            for (int commentIndex = 0;commentIndex < allTextView.size();commentIndex++){
+                if (realmResults.get(commentIndex)!=null){
+                    new HistoryOnClickListener(this, realmResults.get(commentIndex),allTextView.get(commentIndex));
                 }else{
-                    new HistoryOnClickListener(this, null, allTextView.get(viewCreated));
+                    new HistoryOnClickListener(this, null, allTextView.get(commentIndex));
                 }
             }
         }

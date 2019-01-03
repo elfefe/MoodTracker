@@ -19,8 +19,9 @@ import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
-import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+import com.moodtracker.elfefe.moodtracker.dao.CommentRealmDAO;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
+import com.moodtracker.elfefe.moodtracker.utils.TimeUtils;
 
 import io.realm.RealmResults;
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         gestureDetector = new GestureDetector(this, gestureListener);
 
-        StateStore stateStore = new StateStore(this);
+        CommentRealmDAO commentRealmDAO = new CommentRealmDAO(this);
 
         // Save your state or share it with the world
         mImageComment.setOnClickListener(v -> {
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity {
                         this.comment = etComment.getText().toString();
 
                         feeling = Mood.values()[gestureListener.getValueX()];
-                        stateStore.setCommentRealm(comment, feeling);
-                        stateStore.realmTransactionCopyOrUpdate();
+                        commentRealmDAO.setCommentRealm(comment, feeling);
+                        commentRealmDAO.realmTransactionCopyOrUpdate();
                     })
                     // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
                                         this.comment = messageManager.getComment();
 
                                         feeling = Mood.values()[gestureListener.getValueX()];
-                                        stateStore.setCommentRealm(comment, feeling);
-                                        stateStore.realmTransactionCopyOrUpdate();
+                                        commentRealmDAO.setCommentRealm(comment, feeling);
+                                        commentRealmDAO.realmTransactionCopyOrUpdate();
                                     }))
                                     .setCancelable(true)
                                     .create()
@@ -118,11 +119,11 @@ public class MainActivity extends AppCompatActivity {
         // HistoryActivity intent
         mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
-        RealmResults<CommentRealm> realmResults = stateStore.getQuery().findAll();
+        RealmResults<CommentRealm> realmResults = commentRealmDAO.getQuery().findAll();
         // If the last state saved is today show it in a toast
         if (realmResults.size() != 0) {
             CommentRealm lastComment = realmResults.get(realmResults.size() - 1);
-            if (lastComment != null && lastComment.getId() == stateStore.getDate()) {
+            if (lastComment != null && lastComment.getId() == TimeUtils.getDate()) {
                 Toast.makeText(
                         this,
                         lastComment.getComment(),
