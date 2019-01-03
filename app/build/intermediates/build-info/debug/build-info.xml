@@ -7,22 +7,22 @@
     format="10"
     ir-eligibility="COMPATIBLE"
     plugin-version="3.2.1"
-    timestamp="1546529980910"
+    timestamp="1546532536162"
     token="-1746667689400428766"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="5736" />
+        duration="4366" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="193" />
+        duration="144" />
     <task
         name="verifier"
-        duration="77" />
+        duration="27" />
 
     <artifact
         location="/root/AndroidStudioProjects/MoodTracker/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
@@ -84,7 +84,7 @@
     <build
         build-mode="COLD"
         ir-eligibility="COMPATIBLE"
-        timestamp="1546529980910"
+        timestamp="1546532536162"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="/root/AndroidStudioProjects/MoodTracker/app/build/intermediates/split-apk/debug/slices/slice_4.apk"

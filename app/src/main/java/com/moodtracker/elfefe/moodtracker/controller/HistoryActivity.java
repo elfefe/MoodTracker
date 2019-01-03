@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.moodtracker.elfefe.moodtracker.R;
 import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
 import com.moodtracker.elfefe.moodtracker.dao.CommentRealmDAO;
-import com.moodtracker.elfefe.moodtracker.utils.TimeUtils;
 
 import java.util.ArrayList;
 
