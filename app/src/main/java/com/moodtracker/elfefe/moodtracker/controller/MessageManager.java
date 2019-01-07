@@ -5,24 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.telephony.SmsManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
 
 class MessageManager {
     private final Context context;
-    private String comment;
-    private final String number;
-    private final String editText;
 
-    MessageManager(Context context, String comment, String number, String editText) {
+    MessageManager(Context context) {
         this.context = context;
-        this.comment = comment;
-        this.number = number;
-        this.editText = editText;
     }
 
-    void sendMessage() {
+    void sendMessage(String number, String editTextComment) {
 
         SmsManager smsManager = SmsManager.getDefault();
 
@@ -30,19 +25,14 @@ class MessageManager {
         if (!number.equals("")) {
             smsManager.sendTextMessage(number,
                     null,
-                    editText,
+                    editTextComment,
                     null,
                     setPendingIntent());
-            comment = editText;
         } else
             Toast.makeText(
                     context,
                     R.string.messagemanager_erreur_toast,
                     Toast.LENGTH_SHORT).show();
-    }
-
-    public String getComment() {
-        return comment;
     }
 
     private PendingIntent setPendingIntent() {

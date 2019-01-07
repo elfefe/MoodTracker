@@ -18,11 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;
-import com.moodtracker.elfefe.moodtracker.dao.CommentRealm;
-import com.moodtracker.elfefe.moodtracker.dao.StateStore;
+import com.moodtracker.elfefe.moodtracker.dao.CommentRealmDAO;
 import com.moodtracker.elfefe.moodtracker.model.Mood;
-
-import io.realm.RealmResults;
 
 import static java.lang.System.out;
 
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         gestureDetector = new GestureDetector(this, gestureListener);
 
-        StateStore stateStore = new StateStore(this);
+        CommentRealmDAO commentRealmDAO = new CommentRealmDAO(this);
 
         // Save your state or share it with the world
         mImageComment.setOnClickListener(v -> {
@@ -69,43 +66,31 @@ public class MainActivity extends AppCompatActivity {
             final EditText etComment = new EditText(this);
             final AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
             final AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
-            final MessageManager messageManager = new MessageManager(this,
-                    this.comment,
-                    autoCompleteTextView.getText().toString(),
-                    etComment.getText().toString()
-            );
+            final MessageManager messageManager = new MessageManager(this);
 
             autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
 
             autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
                     autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getNumber()));
 
+            this.comment = etComment.getText().toString();
+            this.feeling = Mood.values()[gestureListener.getValueX()];
+
             new AlertDialog
                     .Builder(this)
                     .setTitle(R.string.commentaire_title_bld)
-                    .setView(etComment)
                     .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {
                     })
                     // Save it
-                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) -> {
-                        this.comment = etComment.getText().toString();
-
-                        feeling = Mood.values()[gestureListener.getValueX()];
-                        stateStore.setCommentRealm(comment, feeling);
-                        stateStore.realmTransactionCopyOrUpdate();
-                    })
+                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) -> commentRealmDAO.setCommentRealm(comment, feeling))
                     // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
                             new AlertDialog.Builder(this)
                                     .setTitle(R.string.message_title_bld)
                                     .setView(autoCompleteTextView)
                                     .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
-                                        messageManager.sendMessage();
-                                        this.comment = messageManager.getComment();
-
-                                        feeling = Mood.values()[gestureListener.getValueX()];
-                                        stateStore.setCommentRealm(comment, feeling);
-                                        stateStore.realmTransactionCopyOrUpdate();
+                                        messageManager.sendMessage(autoCompleteTextView.getText().toString(), comment);
+                                        commentRealmDAO.setCommentRealm(comment, feeling);
                                     }))
                                     .setCancelable(true)
                                     .create()
@@ -118,19 +103,17 @@ public class MainActivity extends AppCompatActivity {
         // HistoryActivity intent
         mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
-        RealmResults<CommentRealm> realmResults = stateStore.getQuery().findAll();
         // If the last state saved is today show it in a toast
-        if (realmResults.size() != 0) {
-            CommentRealm lastComment = realmResults.get(realmResults.size() - 1);
-            if (lastComment != null && lastComment.getId() == stateStore.getDate()) {
-                Toast.makeText(
-                        this,
-                        lastComment.getComment(),
-                        Toast.LENGTH_LONG)
-                        .show();
+        if (commentRealmDAO.getActualMood() != null) {
+            Toast.makeText(
+                    this,
+                    commentRealmDAO.getActualMood().getComment(),
+                    Toast.LENGTH_LONG)
+                    .show();
 
-                mainView.setFeeling(lastComment.getFeeling().getColor(), lastComment.getFeeling().getFeeling());
-            }
+            mainView.setFeeling(commentRealmDAO.getActualMood().getFeeling().getColor(),
+                    commentRealmDAO.getActualMood().getFeeling().getFeeling()
+            );
 
 
         } else {
