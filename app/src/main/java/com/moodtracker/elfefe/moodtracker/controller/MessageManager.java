@@ -21,7 +21,6 @@ class MessageManager {
 
         SmsManager smsManager = SmsManager.getDefault();
 
-
         if (!number.equals("")) {
             smsManager.sendTextMessage(number,
                     null,

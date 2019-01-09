@@ -41,6 +41,7 @@ public class CommentRealmDAO {
             commentRealm.setComment(comment);
             commentRealm.setFeeling(feeling);
             realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(commentRealm));
+            realm.close();
         }
     }
 }

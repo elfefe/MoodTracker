@@ -73,24 +73,24 @@ public class MainActivity extends AppCompatActivity {
             autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
                     autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getNumber()));
 
-            this.comment = etComment.getText().toString();
             this.feeling = Mood.values()[gestureListener.getValueX()];
 
             new AlertDialog
                     .Builder(this)
                     .setTitle(R.string.commentaire_title_bld)
+                    .setView(etComment)
                     .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {
                     })
                     // Save it
-                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) -> commentRealmDAO.setCommentRealm(comment, feeling))
+                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) -> commentRealmDAO.setCommentRealm(etComment.getText().toString(), feeling))
                     // Share it
                     .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
                             new AlertDialog.Builder(this)
                                     .setTitle(R.string.message_title_bld)
                                     .setView(autoCompleteTextView)
                                     .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
-                                        messageManager.sendMessage(autoCompleteTextView.getText().toString(), comment);
-                                        commentRealmDAO.setCommentRealm(comment, feeling);
+                                        messageManager.sendMessage(autoCompleteTextView.getText().toString(), etComment.getText().toString());
+                                        commentRealmDAO.setCommentRealm(etComment.getText().toString(), feeling);
                                     }))
                                     .setCancelable(true)
                                     .create()

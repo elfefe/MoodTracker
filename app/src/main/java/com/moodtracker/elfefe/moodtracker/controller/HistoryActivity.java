@@ -2,6 +2,7 @@ package com.moodtracker.elfefe.moodtracker.controller;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.moodtracker.elfefe.moodtracker.R;
@@ -47,11 +48,11 @@ public class HistoryActivity extends AppCompatActivity {
         List<CommentRealm> lastSevenMoodList = commentRealmDAO.getLastSevenMood();
         if (lastSevenMoodList != null) {
             for (int viewCreated = 0; viewCreated < allTextView.size(); viewCreated++) {
-                if (lastSevenMoodList.get(viewCreated).getId() == TimeUtils.getDate(viewCreated)) {
-                    new HistoryOnClickListener(this, lastSevenMoodList.get(viewCreated), allTextView.get(viewCreated));
-                }else{
-                    new HistoryOnClickListener(this, null, allTextView.get(viewCreated));
-                }
+                    if (lastSevenMoodList.get(viewCreated).getId() == TimeUtils.getDate(viewCreated )) {
+                        new HistoryOnClickListener(this, lastSevenMoodList.get(viewCreated), allTextView.get(viewCreated));
+                    }else{
+                        new HistoryOnClickListener(this, null, allTextView.get(viewCreated));
+                    }
             }
         }
     }
