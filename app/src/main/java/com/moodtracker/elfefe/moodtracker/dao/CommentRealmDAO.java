@@ -17,7 +17,6 @@ public class CommentRealmDAO {
 
     private final Realm realm;
 
-
     public CommentRealmDAO(Context context) {
         Realm.init(context);
         this.realm = Realm.getDefaultInstance();
@@ -40,8 +39,7 @@ public class CommentRealmDAO {
             commentRealm.setId(TimeUtils.getDate());
             commentRealm.setComment(comment);
             commentRealm.setFeeling(feeling);
-            realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(commentRealm));
-            realm.close();
+            realm.copyToRealmOrUpdate(commentRealm);
         }
     }
 }
