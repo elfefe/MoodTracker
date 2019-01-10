@@ -36,21 +36,22 @@ public class HistoryActivity extends AppCompatActivity {
 
         ArrayList<TextView> allTextView = new ArrayList<>();
 
-        allTextView.add(TextView1);
-        allTextView.add(TextView2);
-        allTextView.add(TextView3);
-        allTextView.add(TextView4);
-        allTextView.add(TextView5);
-        allTextView.add(TextView6);
         allTextView.add(TextView7);
+        allTextView.add(TextView6);
+        allTextView.add(TextView5);
+        allTextView.add(TextView4);
+        allTextView.add(TextView3);
+        allTextView.add(TextView2);
+        allTextView.add(TextView1);
 
         List<CommentRealm> lastSevenMoodList = commentRealmDAO.getLastSevenMood();
-        if (lastSevenMoodList != null) {
-            for (int viewCreated = 0; viewCreated < allTextView.size(); viewCreated++) {
-                if (lastSevenMoodList.get(viewCreated).getId() == TimeUtils.getDate(viewCreated )&&
-                    lastSevenMoodList.size() > viewCreated) {
-                    new HistoryOnClickListener(this, lastSevenMoodList.get(viewCreated), allTextView.get(viewCreated));
-                }else{
+        if (!lastSevenMoodList.isEmpty()) {
+            for (int viewCreated = 0, deltaDay = 0; viewCreated < allTextView.size(); viewCreated++) {
+                if (lastSevenMoodList.get(deltaDay).getId() == TimeUtils.getDate(viewCreated + 1)) {
+                    new HistoryOnClickListener(this, lastSevenMoodList.get(deltaDay), allTextView.get(viewCreated));
+                    if (deltaDay < lastSevenMoodList.size() - 1)
+                        deltaDay++;
+                } else {
                     new HistoryOnClickListener(this, null, allTextView.get(viewCreated));
                 }
             }

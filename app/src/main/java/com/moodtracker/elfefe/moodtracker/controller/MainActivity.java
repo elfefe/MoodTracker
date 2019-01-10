@@ -25,10 +25,13 @@ import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String comment = "";
     private Mood feeling;
 
+    private LoaderMainView mainView;
+
     private GestureDetector gestureDetector;
+
+    private CommentRealmDAO commentRealmDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        LoaderMainView mainView = new LoaderMainView(this, mConstraintLayout, mImage);
+        mainView = new LoaderMainView(this, mConstraintLayout, mImage);
 
         GestureListener gestureListener = new GestureListener(mainView);
 
         gestureDetector = new GestureDetector(this, gestureListener);
 
-        CommentRealmDAO commentRealmDAO = new CommentRealmDAO(this);
+        commentRealmDAO = new CommentRealmDAO(this);
 
         // Save your state or share it with the world
         mImageComment.setOnClickListener(v -> {
@@ -103,24 +106,6 @@ public class MainActivity extends AppCompatActivity {
         // HistoryActivity intent
         mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
 
-        // If the last state saved is today show it in a toast
-        if (commentRealmDAO.getActualMood() != null) {
-            Toast.makeText(
-                    this,
-                    commentRealmDAO.getActualMood().getComment(),
-                    Toast.LENGTH_LONG)
-                    .show();
-
-            mainView.setFeeling(commentRealmDAO.getActualMood().getFeeling().getColor(),
-                    commentRealmDAO.getActualMood().getFeeling().getFeeling()
-            );
-
-
-        } else {
-            mainView.setFeeling(Mood.GOOD.getColor(), Mood.GOOD.getFeeling());
-        }
-
-
     }
 
 
@@ -143,6 +128,20 @@ public class MainActivity extends AppCompatActivity {
 
         out.println("MainActivity::onResume()");
 
+        // If the last state saved is today show it in a toast
+        if (commentRealmDAO.getActualMood() != null) {
+            Toast.makeText(
+                    this,
+                    commentRealmDAO.getActualMood().getComment(),
+                    Toast.LENGTH_LONG)
+                    .show();
+
+            mainView.setFeeling(commentRealmDAO.getActualMood().getFeeling().getColor(),
+                    commentRealmDAO.getActualMood().getFeeling().getFeeling()
+            );
+        } else {
+            mainView.setFeeling(Mood.GOOD.getColor(), Mood.GOOD.getFeeling());
+        }
     }
 
     @Override
