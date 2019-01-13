@@ -20,7 +20,7 @@ public enum Mood {
         return feeling;
     }
 
-    public float getPercecnt() {
+    public float getPercent() {
         return percent;
     }
 
@@ -34,6 +34,4 @@ public enum Mood {
         this.feeling = feeling;
         this.percent = percent;
     }
-
-
 }

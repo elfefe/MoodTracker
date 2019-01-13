@@ -21,6 +21,16 @@ public class CommentRealmDAO {
         this.realm = Realm.getDefaultInstance();
     }
 
+    public void setCommentRealm(String comment, Mood feeling) {
+        CommentRealm commentRealm = new CommentRealm();
+        commentRealm.setId(TimeUtils.getDate());
+        commentRealm.setComment(comment);
+        commentRealm.setFeeling(feeling);
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(commentRealm);
+        realm.commitTransaction();
+    }
+
     public List<CommentRealm> getLastSevenMood() {
         RealmQuery<CommentRealm> realmQuery = realm.where(CommentRealm.class).between(CommentRealm.KEY_ID, TimeUtils.getDate(7), TimeUtils.getDate(1));
         RealmResults<CommentRealm> realmResults = realmQuery.findAll();
@@ -30,15 +40,5 @@ public class CommentRealmDAO {
 
     public CommentRealm getActualMood() {
         return realm.where(CommentRealm.class).equalTo(CommentRealm.KEY_ID, TimeUtils.getDate()).findFirst();
-    }
-
-    public void setCommentRealm(String comment, Mood feeling) {
-        CommentRealm commentRealm = new CommentRealm();
-        commentRealm.setId(TimeUtils.getDate());
-        commentRealm.setComment(comment);
-        commentRealm.setFeeling(feeling);
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(commentRealm);
-        realm.commitTransaction();
     }
 }

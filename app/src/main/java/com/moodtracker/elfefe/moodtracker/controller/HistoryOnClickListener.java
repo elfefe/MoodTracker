@@ -29,7 +29,7 @@ class HistoryOnClickListener {
 
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) textView.getLayoutParams();
 
-        layoutParams.matchConstraintPercentWidth = feeling.getPercecnt();
+        layoutParams.matchConstraintPercentWidth = feeling.getPercent();
 
         textView.setLayoutParams(layoutParams);
     }
