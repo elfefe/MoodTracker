@@ -10,23 +10,11 @@ import java.util.ArrayList;
 
 class AutoCompleteManager {
     private final Context context;
-    private ArrayList<Contacts> contactsList;
+    private final ArrayList<Contacts> contactsList;
 
     AutoCompleteManager(Context context) {
         this.context = context;
-    }
-
-    AutoCompleteAdapter autoCompleteAdapter() {
-        Cursor cursor = cursor();
-
-        assert cursor != null;
-        contactsList = arrayList(cursor);
-
-        AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(context, contactsList);
-
-        cursor.close();
-
-        return autoCompleteAdapter;
+        contactsList = contactsList();
     }
 
     private Cursor cursor() {
@@ -46,8 +34,9 @@ class AutoCompleteManager {
         else return null;
     }
 
-    private ArrayList<Contacts> arrayList(Cursor cursor) {
+    private ArrayList<Contacts> contactsList() {
         ArrayList<Contacts> contactList = new ArrayList<>();
+        Cursor cursor = cursor();
         assert cursor != null;
         while (cursor.moveToNext()) {
             Contacts contacts = new Contacts(cursor.getString(cursor.getColumnIndex(ContactsContract
@@ -61,10 +50,11 @@ class AutoCompleteManager {
             );
             contactList.add(contacts);
         }
+        cursor.close();
         return contactList;
     }
 
-    Contacts getContacts(int position) {
-            return contactsList.get(position);
+    ArrayList<Contacts> getContactsList() {
+        return contactsList;
     }
 }

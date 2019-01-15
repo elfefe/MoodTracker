@@ -69,12 +69,13 @@ public class MainActivity extends AppCompatActivity {
             final EditText etComment = new EditText(this);
             final AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
             final AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
+            final AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(this, autoCompleteManager.getContactsList());
             final MessageManager messageManager = new MessageManager(this);
 
-            autoCompleteTextView.setAdapter(autoCompleteManager.autoCompleteAdapter());
+            autoCompleteTextView.setAdapter(autoCompleteAdapter);
 
             autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
-                    autoCompleteTextView.setText(autoCompleteManager.getContacts(position).getNumber()));
+                    autoCompleteTextView.setText(autoCompleteManager.getContactsList().get(position).getNumber()));
 
             this.feeling = Mood.values()[gestureListener.getValueX()];
 
