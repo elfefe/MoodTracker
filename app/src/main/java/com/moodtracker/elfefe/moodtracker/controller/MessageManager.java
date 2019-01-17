@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.telephony.SmsManager;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.moodtracker.elfefe.moodtracker.R;

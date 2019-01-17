@@ -7,12 +7,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -36,9 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         out.println("MainActivity::onCreate()");
-
         setContentView(R.layout.activity_main);
 
         ConstraintLayout mConstraintLayout = findViewById(R.id.mainView);
@@ -56,57 +52,29 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mainView = new LoaderMainView(this, mConstraintLayout, mImage);
-
         GestureListener gestureListener = new GestureListener(mainView);
-
         gestureDetector = new GestureDetector(this, gestureListener);
-
         commentRealmDAO = new CommentRealmDAO(this);
+
 
         // Save your state or share it with the world
         mImageComment.setOnClickListener(v -> {
 
-            final EditText etComment = new EditText(this);
-            final AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
-            final AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
-            final AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(this, autoCompleteManager.getContactsList());
-            final MessageManager messageManager = new MessageManager(this);
+            this.feeling = Mood.values()[gestureListener.getValueX()];
+
+            AutoCompleteTextView autoCompleteTextView = new AutoCompleteTextView(this);
+            AutoCompleteManager autoCompleteManager = new AutoCompleteManager(this);
+            AutoCompleteAdapter autoCompleteAdapter = new AutoCompleteAdapter(this, autoCompleteManager.getContactsList());
 
             autoCompleteTextView.setAdapter(autoCompleteAdapter);
-
             autoCompleteTextView.setOnItemClickListener((parent, view, position, id) ->
                     autoCompleteTextView.setText(autoCompleteManager.getContactsList().get(position).getNumber()));
 
-            this.feeling = Mood.values()[gestureListener.getValueX()];
-
-            new AlertDialog
-                    .Builder(this)
-                    .setTitle(R.string.commentaire_title_bld)
-                    .setView(etComment)
-                    .setNeutralButton(R.string.commentaire_neutral_bld, (dialog, which) -> {
-                    })
-                    // Save it
-                    .setNegativeButton(R.string.commentaire_negative_bld, (dialog, which) -> commentRealmDAO.setCommentRealm(etComment.getText().toString(), feeling))
-                    // Share it
-                    .setPositiveButton(R.string.commentaire_positive_bld, (dialog, which) ->
-                            new AlertDialog.Builder(this)
-                                    .setTitle(R.string.message_title_bld)
-                                    .setView(autoCompleteTextView)
-                                    .setPositiveButton(R.string.message_positive_bld, ((dialog1, which1) -> {
-                                        messageManager.sendMessage(autoCompleteTextView.getText().toString(), etComment.getText().toString());
-                                        commentRealmDAO.setCommentRealm(etComment.getText().toString(), feeling);
-                                    }))
-                                    .setCancelable(true)
-                                    .create()
-                                    .show())
-                    .setCancelable(true)
-                    .create()
-                    .show();
+            AlertDialogComment alertDialogComment = new AlertDialogComment(this);
+            alertDialogComment.getAlertDialogComment(feeling,commentRealmDAO,autoCompleteTextView).show();
         });
-
         // HistoryActivity intent
         mImageHistory.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HistoryActivity.class)));
-
     }
 
 
@@ -126,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         out.println("MainActivity::onResume()");
 
         // If the last state saved is today show it in a toast
@@ -148,21 +115,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
         out.println("MainActivity::onPause()");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         out.println("MainActivity::onStop()");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         out.println("MainActivity::onDestroy()");
     }
 }
